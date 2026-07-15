@@ -24,8 +24,10 @@
 """
 
 import argparse
+import json
 import logging
 import os
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -111,6 +113,32 @@ def _build_frontmatter(fields: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _read_existing_timestamp(file_path: Path) -> str | None:
+    if not file_path.exists():
+        return None
+    text = file_path.read_text(encoding="utf-8")
+    m = re.search(r"^timestamp:\s*(.+)$", text, re.MULTILINE)
+    if not m:
+        return None
+    value = m.group(1).strip()
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        return value
+
+
+def _should_skip(existing_timestamp: str | None, current_timestamp: str, force: bool) -> bool:
+    if force:
+        return False
+    if existing_timestamp is None:
+        return False
+    return existing_timestamp == current_timestamp
+
+
+def _incident_file_path(incident_id: str, output_dir: Path) -> Path:
+    return output_dir / f"{incident_id}.md"
+
+
 def _format_notes(notes: list[dict]) -> str:
     if not notes:
         return "_ノートなし_"
@@ -177,7 +205,7 @@ def _write_incident(incident: dict, notes: list[dict], alerts: list[dict], outpu
         f"{_format_alerts(alerts)}\n"
     )
 
-    file_path = output_dir / f"{incident_id}.md"
+    file_path = _incident_file_path(incident_id, output_dir)
     file_path.write_text(frontmatter + "\n" + body, encoding="utf-8")
     logger.info(f"書き込み完了: {file_path}")
 
@@ -209,6 +237,7 @@ def main() -> None:
         default=None,
         help="取得対象のインシデントID（カンマ区切りで複数指定可）。指定時は一覧取得系オプション(--since/--until/--statuses/--services)は無視される",
     )
+    parser.add_argument("--force", action="store_true", help="更新チェックをスキップし常に再取得・上書きする")
     args = parser.parse_args()
 
     def comma_list(value: str) -> list[str]:
@@ -241,6 +270,13 @@ def main() -> None:
             except requests.HTTPError as e:
                 logger.warning(f"インシデント取得失敗: {incident_id}: {e}, スキップ")
                 continue
+            file_path = _incident_file_path(incident_id, output_dir)
+            existing_timestamp = _read_existing_timestamp(file_path)
+            current_timestamp = incident.get("updated_at", "")
+            if _should_skip(existing_timestamp, current_timestamp, args.force):
+                logger.info(f"更新なし: スキップ ({file_path})")
+                fetched += 1
+                continue
             notes = _fetch_notes(session, incident_id)
             alerts = _fetch_alerts(session, incident_id)
             _write_incident(incident, notes, alerts, output_dir)
@@ -260,6 +296,12 @@ def main() -> None:
 
     for incident in incidents:
         incident_id = incident["id"]
+        file_path = _incident_file_path(incident_id, output_dir)
+        existing_timestamp = _read_existing_timestamp(file_path)
+        current_timestamp = incident.get("updated_at", "")
+        if _should_skip(existing_timestamp, current_timestamp, args.force):
+            logger.info(f"更新なし: スキップ ({file_path})")
+            continue
         notes = _fetch_notes(session, incident_id)
         alerts = _fetch_alerts(session, incident_id)
         _write_incident(incident, notes, alerts, output_dir)
