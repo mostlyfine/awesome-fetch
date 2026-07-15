@@ -15,16 +15,19 @@ tools: ["Bash", "Read", "AskUserQuestion"]
 
 - **PagerDutyインシデント取得の依頼が確定した場合。** pagerdutyスキルがユーザーの発言から取得期間・ステータス・対象サービスを特定し終え、実際の取得・保存処理をこのエージェントに委譲してきた場合
 - **障害履歴の要約依頼。** 「直近の障害情報教えて」のように期間指定のみで一覧取得したい場合
-
-特定インシデントIDのみのピンポイント取得はこのエージェントの対象外（期間指定での一覧取得のみ対応）。
+- **特定インシデントのピンポイント取得依頼。** インシデントURL（例: `https://<subdomain>.pagerduty.com/incidents/<incident_id>`）またはインシデントIDが確定し、pagerdutyスキルから`--incident-ids`での取得が委譲された場合
 
 ## 入力
 
 呼び出し元から次を受け取る想定:
-- 取得期間（`--since` / `--until`。省略時は直近7日間）
-- ステータス（`--statuses`。省略時は `triggered,acknowledged,resolved`）
-- 対象サービス（`--services`。省略時は全サービス）
+- ピンポイント取得の場合: インシデントID（`--incident-ids`。カンマ区切りで複数指定可）
+- 一覧取得の場合:
+  - 取得期間（`--since` / `--until`。省略時は直近7日間）
+  - ステータス（`--statuses`。省略時は `triggered,acknowledged,resolved`）
+  - 対象サービス（`--services`。省略時は全サービス）
 - 会話から分かっている場合は出力先ディレクトリの指定
+
+`--incident-ids` と一覧系オプション（`--since`/`--until`/`--statuses`/`--services`）は同時に指定しない。両方委譲されてきた場合は `--incident-ids` を優先する（一覧系オプションは無視され、実行時に警告ログが出る）。
 
 コマンドは必ずリポジトリルート（Zettelkasten直下）から、リポジトリルート相対パスで実行する。`cd` はしない。
 
@@ -48,10 +51,18 @@ echo "PAGERDUTY_TOKEN set: ${PAGERDUTY_TOKEN:+yes}"
 
 ## Step 3: 実行
 
+一覧取得の場合:
 ```bash
 uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/pagerduty_fetcher.py \
   [--since 2024-01-01T00:00:00Z] [--until 2024-01-08T00:00:00Z] \
   [--statuses triggered,acknowledged,resolved] [--services SVC1,SVC2] \
+  [-o <output-dir>]
+```
+
+ピンポイント取得の場合:
+```bash
+uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/pagerduty_fetcher.py \
+  --incident-ids <incident_id1>,<incident_id2> \
   [-o <output-dir>]
 ```
 
@@ -63,4 +74,5 @@ uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/pagerduty_fetcher.py \
 
 - 出力先ディレクトリには `incidents/{incident_id}.md`（インシデント本体：ステータス・緊急度・発生/解決時刻・ノート・アラート詳細）が生成される
 - 既存ファイルは上書きされる。再取得（最新化）したい場合もそのまま同じコマンドを再実行すればよい
-- インシデント一覧の期間指定取得に限定される。サービス一覧・オンコールスケジュールなど他のPagerDutyリソースの取得はこのエージェントの対象外
+- ピンポイント取得で指定したIDが存在しない・権限がない等の場合、そのIDはスキップされ警告ログが出るが、他のIDの取得は継続される
+- インシデント一覧・単体インシデントの取得に限定される。サービス一覧・オンコールスケジュールなど他のPagerDutyリソースの取得はこのエージェントの対象外
