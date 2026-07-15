@@ -94,6 +94,12 @@ def _fetch_alerts(session: requests.Session, incident_id: str) -> list[dict]:
     return _fetch_all(session, f"/incidents/{incident_id}/alerts", "alerts")
 
 
+def _fetch_incident_by_id(session: requests.Session, incident_id: str) -> dict:
+    resp = session.get(f"{BASE_URL}/incidents/{incident_id}")
+    resp.raise_for_status()
+    return resp.json()["incident"]
+
+
 def _build_frontmatter(fields: dict) -> str:
     lines = ["---"]
     for k, v in fields.items():
@@ -176,10 +182,6 @@ def _write_incident(incident: dict, notes: list[dict], alerts: list[dict], outpu
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
-    now = datetime.now(timezone.utc)
-    default_since = (now - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    default_until = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-
     parser = argparse.ArgumentParser(
         description="PagerDutyのインシデント情報をOKF形式でエクスポートする。",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -187,31 +189,70 @@ def main() -> None:
             "例:\n"
             "  uv run scripts/pagerduty_fetcher.py --since 2024-01-01T00:00:00Z -o .\n"
             "  uv run scripts/pagerduty_fetcher.py --statuses resolved --services SVC1,SVC2\n"
+            "  uv run scripts/pagerduty_fetcher.py --incident-ids Q0AX7D922G6IUR,ABCDEFG -o .\n"
         ),
     )
-    parser.add_argument("--since", default=default_since, help="取得開始日時（ISO 8601）（デフォルト: 7日前）")
-    parser.add_argument("--until", default=default_until, help="取得終了日時（ISO 8601）（デフォルト: 現在）")
+    parser.add_argument("--since", default=None, help="取得開始日時（ISO 8601）（デフォルト: 7日前。--incident-ids指定時は無視）")
+    parser.add_argument("--until", default=None, help="取得終了日時（ISO 8601）（デフォルト: 現在。--incident-ids指定時は無視）")
     parser.add_argument(
         "--statuses",
-        default=",".join(DEFAULT_STATUSES),
-        help="対象ステータス（カンマ区切り）",
+        default=None,
+        help=f"対象ステータス（カンマ区切り、デフォルト: {','.join(DEFAULT_STATUSES)}。--incident-ids指定時は無視）",
     )
     parser.add_argument("-o", "--output", metavar="DIR", default=".", help="OKF出力先ディレクトリ")
-    parser.add_argument("--services", default=None, help="対象サービスID（カンマ区切り）。省略時は全サービス")
+    parser.add_argument("--services", default=None, help="対象サービスID（カンマ区切り）。省略時は全サービス。--incident-ids指定時は無視")
+    parser.add_argument(
+        "--incident-ids",
+        default=None,
+        help="取得対象のインシデントID（カンマ区切りで複数指定可）。指定時は一覧取得系オプション(--since/--until/--statuses/--services)は無視される",
+    )
     args = parser.parse_args()
 
     def comma_list(value: str) -> list[str]:
         return [s.strip() for s in value.split(",")]
 
-    statuses = comma_list(args.statuses)
-    service_ids = comma_list(args.services) if args.services else None
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
-
     session = _make_session()
 
-    logger.info(f"インシデント取得中: {args.since} ～ {args.until}, statuses={statuses}, services={service_ids or '全て'}")
-    incidents = _fetch_incidents(session, args.since, args.until, statuses, service_ids)
+    if args.incident_ids:
+        ignored = [
+            name
+            for name, value in (
+                ("--since", args.since),
+                ("--until", args.until),
+                ("--statuses", args.statuses),
+                ("--services", args.services),
+            )
+            if value is not None
+        ]
+        if ignored:
+            logger.warning(f"--incident-ids 指定時は次のオプションは無視されます: {', '.join(ignored)}")
+
+        incident_ids = comma_list(args.incident_ids)
+        logger.info(f"ピンポイント取得: {len(incident_ids)} 件のインシデントIDを指定")
+        fetched = 0
+        for incident_id in incident_ids:
+            try:
+                incident = _fetch_incident_by_id(session, incident_id)
+            except requests.HTTPError as e:
+                logger.warning(f"インシデント取得失敗: {incident_id}: {e}, スキップ")
+                continue
+            notes = _fetch_notes(session, incident_id)
+            alerts = _fetch_alerts(session, incident_id)
+            _write_incident(incident, notes, alerts, output_dir)
+            fetched += 1
+        logger.info(f"完了: {fetched}/{len(incident_ids)} 件取得, 出力先: {output_dir}")
+        return
+
+    now = datetime.now(timezone.utc)
+    since = args.since or (now - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    until = args.until or now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    statuses = comma_list(args.statuses) if args.statuses else DEFAULT_STATUSES
+    service_ids = comma_list(args.services) if args.services else None
+
+    logger.info(f"インシデント取得中: {since} ～ {until}, statuses={statuses}, services={service_ids or '全て'}")
+    incidents = _fetch_incidents(session, since, until, statuses, service_ids)
     logger.info(f"{len(incidents)} 件のインシデントを取得")
 
     for incident in incidents:
