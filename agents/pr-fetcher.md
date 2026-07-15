@@ -61,4 +61,4 @@ uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/pr_fetcher.py <PR_URL> [<PR_URL> ...] \
 - 出力先ディレクトリには `{owner}-{repo}-{number}.md`（PR本体）が生成される
 - 「コメント含む」を網羅するため、Issueコメント（会話タブの発言）・レビューコメント（差分への行コメント）・レビュー履歴（Approve/Request changes等の状態とコメント）をすべて取得する
 - 出力Markdownの先頭には `type` / `title` / `resource`（PRのhtml_url）/ `tags`（`github`, `pr`, state, 該当すれば `merged`）/ `timestamp` の frontmatter が自動で付与される
-- 既存ファイルは上書きされる。再取得（最新化）したい場合もそのまま同じコマンドを再実行すればよい
+- PRに更新がなければ処理をスキップする（既存ファイルはそのまま保持される）。更新があれば自動的に再取得・上書きされる。更新の有無に関わらず強制的に再取得・上書きしたい場合は `--force` を付与する

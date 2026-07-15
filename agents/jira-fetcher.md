@@ -84,7 +84,7 @@ uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/jira_issue_fetcher.py <ISSUE_KEY> [<ISSUE_KE
 - 出力先ディレクトリには `{ISSUE_KEY}.md`（issue本体）が生成される
 - 出力Markdownの先頭には `type` / `title` / `resource`（issueのbrowse URL）/ `tags` / `timestamp` の frontmatter が自動で付与される
 - description・コメント本文はADF（Atlassian Document Format）/プレーンテキストのいずれでも自動でプレーンテキストに変換される
-- 既存ファイルは上書きされる。再取得（最新化）したい場合もそのまま同じコマンドを再実行すればよい
+- issueに更新がなければ処理をスキップする（既存ファイルはそのまま保持される）。更新があれば自動的に再取得・上書きされる。更新の有無に関わらず強制的に再取得・上書きしたい場合は `--force` を付与する
 - MCP経路はAtlassian Cloud（`*.atlassian.net`）のみ対応。自社ホストのJIRA Server/Data Centerはトークン経路のみ利用できる
 
 ---

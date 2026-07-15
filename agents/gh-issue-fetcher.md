@@ -61,4 +61,4 @@ uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/issue_fetcher.py <ISSUE_URL> [<ISSUE_URL> ..
 - 出力先ディレクトリには `{owner}-{repo}-{number}.md`（Issue本体）が生成される
 - 「コメント含む」を網羅するため、Issueに付いた全コメント（会話タブの発言）を取得する
 - 出力Markdownの先頭には `type` / `title` / `resource`（Issueのhtml_url）/ `tags`（`github`, `issue`, state, および各ラベル名）/ `timestamp` の frontmatter が自動で付与される
-- 既存ファイルは上書きされる。再取得（最新化）したい場合もそのまま同じコマンドを再実行すればよい
+- Issueに更新がなければ処理をスキップする（既存ファイルはそのまま保持される）。更新があれば自動的に再取得・上書きされる。更新の有無に関わらず強制的に再取得・上書きしたい場合は `--force` を付与する
