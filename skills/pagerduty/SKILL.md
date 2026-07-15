@@ -13,13 +13,21 @@ allowed-tools: Task AskUserQuestion
 
 ## Step 1: 取得条件の特定
 
+ユーザーの発言から、インシデントID指定のピンポイント取得か、期間指定での一覧取得かを判定し、対象を特定する。
+
+### インシデントURL・IDが読み取れる場合（ピンポイント取得）
+
+- **インシデントURLが与えられた場合**: `https://<subdomain>.pagerduty.com/incidents/<incident_id>` の形式から末尾のインシデントIDを抽出する
+- **インシデントIDが直接与えられた場合**（例: `Q0AX7D922G6IUR`）: そのまま使う
+- 複数のURL/IDが与えられた場合はまとめて対象とする（`--incident-ids` にカンマ区切りで渡す）
+
+### 期間指定での一覧取得の場合
+
 ユーザーの発言から以下を抽出する。
 
 - **取得期間**: `--since` / `--until`（ISO 8601）。省略時は直近7日間
 - **ステータス**: `--statuses`（カンマ区切り）。省略時は `triggered,acknowledged,resolved`
 - **対象サービス**: `--services`（サービスIDのカンマ区切り）。省略時は全サービス
-
-特定インシデントIDのみのピンポイント取得はこのスキルの対象外（期間指定での一覧取得のみ対応）。
 
 ## Step 2: pagerduty-fetcher エージェントへの委譲
 
