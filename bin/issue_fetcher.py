@@ -70,12 +70,12 @@ def _gh_api_paginated(host: str, path: str, per_page: int = 100) -> list[dict]:
     return items
 
 
-def _fetch_issue_bundle(host: str, owner: str, repo: str, number: str) -> dict:
-    base = f"repos/{owner}/{repo}"
-    return {
-        "issue": _gh_api(host, f"{base}/issues/{number}"),
-        "comments": _gh_api_paginated(host, f"{base}/issues/{number}/comments"),
-    }
+def _fetch_issue(host: str, owner: str, repo: str, number: str) -> dict:
+    return _gh_api(host, f"repos/{owner}/{repo}/issues/{number}")
+
+
+def _fetch_issue_comments(host: str, owner: str, repo: str, number: str) -> list[dict]:
+    return _gh_api_paginated(host, f"repos/{owner}/{repo}/issues/{number}/comments")
 
 
 def _build_frontmatter(fields: dict) -> str:
@@ -88,6 +88,32 @@ def _build_frontmatter(fields: dict) -> str:
             lines.append(f"{k}: {v}")
     lines.append("---")
     return "\n".join(lines) + "\n"
+
+
+def _read_existing_timestamp(file_path: Path) -> str | None:
+    if not file_path.exists():
+        return None
+    text = file_path.read_text(encoding="utf-8")
+    m = re.search(r"^timestamp:\s*(.+)$", text, re.MULTILINE)
+    if not m:
+        return None
+    value = m.group(1).strip()
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        return value
+
+
+def _should_skip(existing_timestamp: str | None, current_timestamp: str, force: bool) -> bool:
+    if force:
+        return False
+    if existing_timestamp is None:
+        return False
+    return existing_timestamp == current_timestamp
+
+
+def _issue_file_path(owner: str, repo: str, number: str, output_dir: Path) -> Path:
+    return output_dir / f"{sanitize_filename(owner)}-{sanitize_filename(repo)}-{number}.md"
 
 
 def _format_issue_comments(comments: list[dict]) -> str:
@@ -149,7 +175,7 @@ def _write_issue(host: str, owner: str, repo: str, number: str, bundle: dict, ou
         f"{_format_issue_comments(bundle['comments'])}\n"
     )
 
-    file_path = output_dir / f"{sanitize_filename(owner)}-{sanitize_filename(repo)}-{number}.md"
+    file_path = _issue_file_path(owner, repo, number, output_dir)
     file_path.write_text(frontmatter + "\n" + body, encoding="utf-8")
     logger.info(f"書き込み完了: {file_path}")
     return file_path
@@ -169,6 +195,7 @@ def main() -> None:
     )
     parser.add_argument("issue_urls", nargs="+", metavar="ISSUE_URL", help="取得対象のIssue URL（複数指定可）")
     parser.add_argument("-o", "--output", metavar="DIR", default=".", help="OKF出力先ディレクトリ")
+    parser.add_argument("--force", action="store_true", help="更新チェックをスキップし常に再取得・上書きする")
     args = parser.parse_args()
 
     output_dir = Path(args.output)
@@ -182,7 +209,16 @@ def main() -> None:
             logger.warning(f"{e}, スキップ")
             continue
         try:
-            bundle = _fetch_issue_bundle(ref["host"], ref["owner"], ref["repo"], ref["number"])
+            issue = _fetch_issue(ref["host"], ref["owner"], ref["repo"], ref["number"])
+            file_path = _issue_file_path(ref["owner"], ref["repo"], ref["number"], output_dir)
+            existing_timestamp = _read_existing_timestamp(file_path)
+            current_timestamp = issue.get("updated_at", "")
+            if _should_skip(existing_timestamp, current_timestamp, args.force):
+                logger.info(f"更新なし: スキップ ({file_path})")
+                fetched_urls.append(url)
+                continue
+            comments = _fetch_issue_comments(ref["host"], ref["owner"], ref["repo"], ref["number"])
+            bundle = {"issue": issue, "comments": comments}
             _write_issue(ref["host"], ref["owner"], ref["repo"], ref["number"], bundle, output_dir)
             fetched_urls.append(url)
         except GhApiError as e:
