@@ -135,6 +135,32 @@ def _build_frontmatter(fields: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _read_existing_timestamp(file_path: Path) -> str | None:
+    if not file_path.exists():
+        return None
+    text = file_path.read_text(encoding="utf-8")
+    m = re.search(r"^timestamp:\s*(.+)$", text, re.MULTILINE)
+    if not m:
+        return None
+    value = m.group(1).strip()
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError:
+        return value
+
+
+def _should_skip(existing_timestamp: str | None, current_timestamp: str, force: bool) -> bool:
+    if force:
+        return False
+    if existing_timestamp is None:
+        return False
+    return existing_timestamp == current_timestamp
+
+
+def _issue_file_path(key: str, output_dir: Path) -> Path:
+    return output_dir / f"{sanitize_filename(key)}.md"
+
+
 def _format_comments(comments: list[dict]) -> str:
     if not comments:
         return "_コメントなし_"
@@ -189,7 +215,7 @@ def _write_issue(issue: dict, comments: list[dict], base_url: str, output_dir: P
         f"{_format_comments(comments)}\n"
     )
 
-    file_path = output_dir / f"{sanitize_filename(key)}.md"
+    file_path = _issue_file_path(key, output_dir)
     file_path.write_text(frontmatter + "\n" + body, encoding="utf-8")
     logger.info(f"書き込み完了: {file_path}")
 
@@ -210,6 +236,7 @@ def main() -> None:
     parser.add_argument("--fields", default=None, help="取得フィールド（カンマ区切り、省略時は全フィールド）")
     parser.add_argument("--url", default=None, help="JIRAのベースURL（省略時は環境変数 JIRA_URL）")
     parser.add_argument("-o", "--output", metavar="DIR", default=".", help="OKF出力先ディレクトリ")
+    parser.add_argument("--force", action="store_true", help="更新チェックをスキップし常に再取得・上書きする")
     parser.add_argument("--mcp-json", metavar="PATH", default=None, help="MCPツールで取得済みのissue JSON。指定時はISSUE_KEYを1つだけ指定する")
     args = parser.parse_args()
 
@@ -225,6 +252,14 @@ def main() -> None:
         raw_path = Path(args.mcp_json)
         try:
             issue = json.loads(raw_path.read_text(encoding="utf-8"))
+            file_path = _issue_file_path(key, output_dir)
+            existing_timestamp = _read_existing_timestamp(file_path)
+            current_timestamp = issue.get("fields", {}).get("updated", "")
+            if _should_skip(existing_timestamp, current_timestamp, args.force):
+                logger.info(f"更新なし: スキップ ({file_path})")
+                raw_path.unlink(missing_ok=True)
+                logger.info(f"完了: 1/1 件取得, 出力先: {output_dir}")
+                return
             comments = issue.get("fields", {}).get("comment", {}).get("comments", [])
             _write_issue(issue, comments, base_url, output_dir)
             raw_path.unlink(missing_ok=True)
@@ -241,6 +276,13 @@ def main() -> None:
     for key in args.issue_keys:
         try:
             issue = _fetch_issue(session, base_url, key, fields)
+            file_path = _issue_file_path(key, output_dir)
+            existing_timestamp = _read_existing_timestamp(file_path)
+            current_timestamp = issue.get("fields", {}).get("updated", "")
+            if _should_skip(existing_timestamp, current_timestamp, args.force):
+                logger.info(f"更新なし: スキップ ({file_path})")
+                fetched_keys.append(key)
+                continue
             comments = _fetch_comments(session, base_url, key)
             _write_issue(issue, comments, base_url, output_dir)
             fetched_keys.append(key)
