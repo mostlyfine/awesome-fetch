@@ -1,0 +1,22 @@
+{
+  "name": "awesome-fetch",
+  "version": "0.1.0",
+  "description": "Confluence・GitHub Issue/PR・JIRA・PagerDuty・Slack・Google Sheets・Google プレゼンテーションのデータを取得し、Markdown/CSV/PDFとしてローカルに保存するfetcher系スキル集",
+  "author": {
+    "name": "mostlyfine",
+    "email": "mostlyfine@gmail.com"
+  },
+  "repository": "https://github.com/mostlyfine/awesome-fetch",
+  "keywords": [
+    "confluence",
+    "jira",
+    "github",
+    "pagerduty",
+    "slack",
+    "google-sheets",
+    "google-slides",
+    "pdf",
+    "fetcher",
+    "markdown"
+  ]
+}
