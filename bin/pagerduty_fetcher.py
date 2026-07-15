@@ -18,6 +18,9 @@
     [--since 2024-01-01T00:00:00Z] [--until 2024-01-08T00:00:00Z] \\
     [--statuses triggered,acknowledged,resolved] [--services SVC1,SVC2] \\
     [-o .]
+
+  uv run scripts/pagerduty_fetcher.py \\
+    --incident-ids Q0AX7D922G6IUR,ABCDEFG [-o .]
 """
 
 import argparse
@@ -209,7 +212,7 @@ def main() -> None:
     args = parser.parse_args()
 
     def comma_list(value: str) -> list[str]:
-        return [s.strip() for s in value.split(",")]
+        return [s.strip() for s in value.split(",") if s.strip()]
 
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
