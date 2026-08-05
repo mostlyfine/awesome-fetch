@@ -10,7 +10,7 @@
   GitHub Enterprise を使う場合は `gh auth login --hostname <host>` で事前にログインしておく
 
 ■ 使い方
-  uv run scripts/pr_fetcher.py https://github.com/owner/repo/pull/123 \\
+  uv run scripts/gh_pull_request_fetcher.py https://github.com/owner/repo/pull/123 \\
     [https://ghe.example.com/owner2/repo2/pull/45 ...] [-o .]
 """
 
@@ -227,8 +227,8 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "例:\n"
-            "  uv run scripts/pr_fetcher.py https://github.com/owner/repo/pull/123 -o .\n"
-            "  uv run scripts/pr_fetcher.py https://ghe.example.com/owner/repo/pull/45\n"
+            "  uv run scripts/gh_pull_request_fetcher.py https://github.com/owner/repo/pull/123 -o .\n"
+            "  uv run scripts/gh_pull_request_fetcher.py https://ghe.example.com/owner/repo/pull/45\n"
         ),
     )
     parser.add_argument("pr_urls", nargs="+", metavar="PR_URL", help="取得対象のPR URL（複数指定可）")

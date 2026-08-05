@@ -20,7 +20,7 @@ allowed-tools: Bash Read AskUserQuestion
   - `github.com` に加え、GitHub Enterprise（社内GHE等）のホストも対象
   - `#issuecomment-...` のようなフラグメントが付いていても番号までを読み取れればよい
 - **URLが無い場合**（`owner/repo#123` のような略記のみ等）: IssueのフルURLをユーザーに確認する
-- Pull Requestの URL（`.../pull/<番号>`）はこのスキルの対象外。pr を使う
+- Pull Requestの URL（`.../pull/<番号>`）はこのスキルの対象外。gh-pull-request を使う
 
 コマンドは必ずリポジトリルートから、リポジトリルート相対パスで実行する。`cd` はしない。取得には `gh api` を使うため、JIRA/Confluence/PagerDutyのfetcher系と違いAPIトークンの手動設定は不要（`gh auth login` 済みであればよい）。
 

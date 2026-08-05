@@ -1,5 +1,5 @@
 ---
-name: presentation
+name: google-slides
 description: >
   Googleプレゼンテーション(Google スライド)をPDF化してローカルに保存する。
   「このプレゼン資料をPDFで保存して」「Google SlidesをPDFにして」「このプレゼンテーションの内容を確認して」など、
@@ -7,7 +7,7 @@ description: >
 allowed-tools: Bash Read AskUserQuestion mcp__claude_ai_Google_Drive__get_file_metadata mcp__claude_ai_Google_Drive__download_file_content
 ---
 
-# Presentation Fetcher スキル
+# Google Slides Fetcher スキル
 
 対象プレゼンテーションの特定から取得・保存までを一貫して行う。
 
@@ -23,13 +23,13 @@ allowed-tools: Bash Read AskUserQuestion mcp__claude_ai_Google_Drive__get_file_m
 
 スクリプトのパスは `${CLAUDE_PLUGIN_ROOT:-.}` を使って指定する。Claude Codeにプラグインとしてインストールされている場合は `CLAUDE_PLUGIN_ROOT` がそのインストール先の絶対パスに展開される。この変数を認識しないツール（codex・Copilot等）やシェルから直接リポジトリを使う場合は未設定のため `.`（実行時のカレントディレクトリ）にフォールバックする——いずれの場合もリポジトリルートから実行してさえいれば正しく解決される。
 
-取得経路は2段構え。**claude.aiのGoogle Driveコネクタ（MCPツール）を優先し、使えない場合のみADC経由の`presentation_fetcher.py`にフォールバックする。**
+取得経路は2段構え。**claude.aiのGoogle Driveコネクタ（MCPツール）を優先し、使えない場合のみADC経由の`google_slides_fetcher.py`にフォールバックする。**
 
 ## Step 2: 出力先ディレクトリの確認
 
-1. Claude Memoryの `fetcher_output_dirs.md` を確認し、presentationの行にユーザー指定の出力先が記録されていればそれを使う
-2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/presentation`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
-3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のpresentationの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
+1. Claude Memoryの `fetcher_output_dirs.md` を確認し、google-slidesの行にユーザー指定の出力先が記録されていればそれを使う
+2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/google-slides`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
+3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のgoogle-slidesの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
 
 ## Step 3: 取得経路の判定（MCP優先→ADCフォールバック）
 
@@ -61,18 +61,18 @@ gcloud auth application-default login \
   --scopes "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
 ```
 
-ADCがあってもquota project（課金・クォータの計上先GCPプロジェクト）が未設定だと、Drive APIへのアクセスが `PERMISSION_DENIED` (`SERVICE_DISABLED`) で拒否される。Claude Memoryの `presentation_fetcher_quota_project.md` に過去に動作確認済みのプロジェクトIDが記録されていれば候補として提示する（記録が無ければユーザーに尋ねる。Sheets APIとは別のAPIのため、`spreadsheet_fetcher_quota_project.md` の値を流用する場合はGoogle Drive APIが同一プロジェクトで有効化済みか確認すること）。いずれの場合も、以下のコマンドはユーザー環境の認証設定を変更するため、実行前に毎回ユーザーの許可を得る。
+ADCがあってもquota project（課金・クォータの計上先GCPプロジェクト）が未設定だと、Drive APIへのアクセスが `PERMISSION_DENIED` (`SERVICE_DISABLED`) で拒否される。Claude Memoryの `google_slides_fetcher_quota_project.md` に過去に動作確認済みのプロジェクトIDが記録されていれば候補として提示する（記録が無ければユーザーに尋ねる。Sheets APIとは別のAPIのため、`google_sheets_fetcher_quota_project.md` の値を流用する場合はGoogle Drive APIが同一プロジェクトで有効化済みか確認すること）。いずれの場合も、以下のコマンドはユーザー環境の認証設定を変更するため、実行前に毎回ユーザーの許可を得る。
 
 ```bash
 gcloud auth application-default set-quota-project <PROJECT_ID>
 ```
 
-そのプロジェクトでGoogle Drive APIが有効化されていない場合は `SERVICE_DISABLED` エラーになるので、その場合は表示されるAPI有効化用URLをユーザーに共有する。動作確認できたプロジェクトIDは `presentation_fetcher_quota_project.md` に記録しておく（次回以降もコマンド実行前の確認自体は毎回行う）。
+そのプロジェクトでGoogle Drive APIが有効化されていない場合は `SERVICE_DISABLED` エラーになるので、その場合は表示されるAPI有効化用URLをユーザーに共有する。動作確認できたプロジェクトIDは `google_slides_fetcher_quota_project.md` に記録しておく（次回以降もコマンド実行前の確認自体は毎回行う）。
 
 認証確認後、実行する:
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/presentation_fetcher.py <PRESENTATION_URL_OR_ID> [<PRESENTATION_URL_OR_ID> ...] \
+uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/google_slides_fetcher.py <PRESENTATION_URL_OR_ID> [<PRESENTATION_URL_OR_ID> ...] \
   -o <output-dir>
 ```
 

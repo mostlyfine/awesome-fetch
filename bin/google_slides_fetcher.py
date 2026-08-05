@@ -16,8 +16,8 @@
       --scopes "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
 
 ■ 使い方
-  uv run bin/presentation_fetcher.py <PRESENTATION_URL_OR_ID> [<PRESENTATION_URL_OR_ID> ...] \\
-    [-o docs/presentation]
+  uv run bin/google_slides_fetcher.py <PRESENTATION_URL_OR_ID> [<PRESENTATION_URL_OR_ID> ...] \\
+    [-o docs/google-slides]
 """
 
 import argparse
@@ -106,8 +106,8 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "例:\n"
-            "  uv run bin/presentation_fetcher.py https://docs.google.com/presentation/d/XXXX/edit -o .\n"
-            "  uv run bin/presentation_fetcher.py XXXX -o docs/presentation\n"
+            "  uv run bin/google_slides_fetcher.py https://docs.google.com/presentation/d/XXXX/edit -o .\n"
+            "  uv run bin/google_slides_fetcher.py XXXX -o docs/google-slides\n"
         ),
     )
     parser.add_argument(

@@ -16,8 +16,8 @@
       --scopes "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
 
 ■ 使い方
-  uv run scripts/spreadsheet_fetcher.py <SPREADSHEET_URL_OR_ID> [<SPREADSHEET_URL_OR_ID> ...] \\
-    [--sheets Sheet1,Sheet2] [-o docs/spreadsheet]
+  uv run scripts/google_sheets_fetcher.py <SPREADSHEET_URL_OR_ID> [<SPREADSHEET_URL_OR_ID> ...] \\
+    [--sheets Sheet1,Sheet2] [-o docs/google-sheets]
 """
 
 import argparse
@@ -154,8 +154,8 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "例:\n"
-            "  uv run scripts/spreadsheet_fetcher.py https://docs.google.com/spreadsheets/d/XXXX/edit -o .\n"
-            "  uv run scripts/spreadsheet_fetcher.py XXXX --sheets Sheet1,Sheet2\n"
+            "  uv run scripts/google_sheets_fetcher.py https://docs.google.com/spreadsheets/d/XXXX/edit -o .\n"
+            "  uv run scripts/google_sheets_fetcher.py XXXX --sheets Sheet1,Sheet2\n"
         ),
     )
     parser.add_argument("spreadsheets", nargs="+", metavar="SPREADSHEET_URL_OR_ID", help="対象スプレッドシートのURLまたはID")

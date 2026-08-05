@@ -1,5 +1,5 @@
 ---
-name: pr
+name: gh-pull-request
 description: >
   GitHubのPull RequestをMarkdown化してローカルに保存する。
   会話中にgithub.comやGitHub EnterpriseのPR URL（`.../pull/<番号>`形式）が含まれていたら、
@@ -8,7 +8,7 @@ description: >
 allowed-tools: Bash Read AskUserQuestion
 ---
 
-# PullRequest Fetcher スキル
+# GH Pull Request Fetcher スキル
 
 対象PRの特定から取得・保存までを一貫して行う。
 
@@ -27,9 +27,9 @@ allowed-tools: Bash Read AskUserQuestion
 
 ## Step 2: 出力先ディレクトリの確認
 
-1. Claude Memoryの `fetcher_output_dirs.md` を確認し、prの行にユーザー指定の出力先が記録されていればそれを使う
-2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/pr`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
-3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のprの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
+1. Claude Memoryの `fetcher_output_dirs.md` を確認し、gh-pull-requestの行にユーザー指定の出力先が記録されていればそれを使う
+2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/gh-pull-request`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
+3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のgh-pull-requestの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
 
 ## Step 3: 認証情報の確認
 
@@ -45,7 +45,7 @@ gh auth status
 ## Step 4: 実行
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/pr_fetcher.py <PR_URL> [<PR_URL> ...] \
+uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/gh_pull_request_fetcher.py <PR_URL> [<PR_URL> ...] \
   -o <output-dir>
 ```
 

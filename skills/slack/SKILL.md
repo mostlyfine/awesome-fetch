@@ -10,7 +10,7 @@ allowed-tools: Bash Write Read AskUserQuestion mcp__claude_ai_Slack__slack_read_
 
 # Slack Fetcher スキル
 
-対象スレッドの特定から取得・保存までを一貫して行う。他のfetcher系スキル（pr, jira等）と異なり、`index.md`・`log.md`のような一覧・履歴ファイルは作らない。指定したスレッドの本文を都度1ファイルとして保存するだけのシンプルな設計。
+対象スレッドの特定から取得・保存までを一貫して行う。他のfetcher系スキル（gh-pull-request, jira等）と異なり、`index.md`・`log.md`のような一覧・履歴ファイルは作らない。指定したスレッドの本文を都度1ファイルとして保存するだけのシンプルな設計。
 
 ## Step 1: 対象スレッドの特定
 

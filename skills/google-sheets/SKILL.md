@@ -1,5 +1,5 @@
 ---
-name: spreadsheet
+name: google-sheets
 description: >
   GoogleスプレッドシートのデータをCSV化してローカルに保存する。
   「このスプレッドシート取得して」「Google Sheetsのデータをcsvにして」「このシートの内容を確認して」など、
@@ -7,7 +7,7 @@ description: >
 allowed-tools: Bash Read AskUserQuestion
 ---
 
-# Spreadsheet Fetcher スキル
+# Google Sheets Fetcher スキル
 
 対象スプレッドシートの特定から取得・保存までを一貫して行う。
 
@@ -26,9 +26,9 @@ allowed-tools: Bash Read AskUserQuestion
 
 ## Step 2: 出力先ディレクトリの確認
 
-1. Claude Memoryの `fetcher_output_dirs.md` を確認し、spreadsheetの行にユーザー指定の出力先が記録されていればそれを使う
-2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/spreadsheet`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
-3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のspreadsheetの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
+1. Claude Memoryの `fetcher_output_dirs.md` を確認し、google-sheetsの行にユーザー指定の出力先が記録されていればそれを使う
+2. 記録が無く、会話からも出力先の指定が読み取れない場合は、処理を開始する前に AskUserQuestion で出力先をユーザーに確認する。第1候補として `docs/google-sheets`（リポジトリルート相対）を「推奨」ラベル付きで提示し、ユーザーはこれを承認するか別パスを指定できる。確認して得た値は項番3の手順で `fetcher_output_dirs.md` に記憶する
+3. ユーザーが出力先を指定した場合は、その値を使うと同時に `fetcher_output_dirs.md` のgoogle-sheetsの行を更新して記憶する（次回以降も自動でそのディレクトリが使われるようになる旨を結果報告時に添える）
 
 ## Step 3: 認証情報の確認
 
@@ -45,18 +45,18 @@ gcloud auth application-default login \
   --scopes "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
 ```
 
-ADCがあってもquota project（課金・クォータの計上先GCPプロジェクト）が未設定だと、Sheets APIへのアクセスが `PERMISSION_DENIED` (`SERVICE_DISABLED`) で拒否される。Claude Memoryの `spreadsheet_fetcher_quota_project.md` に過去に動作確認済みのプロジェクトIDが記録されていれば候補として提示する（記録が無ければユーザーに尋ねる）。いずれの場合も、以下のコマンドはユーザー環境の認証設定を変更するため、実行前に毎回ユーザーの許可を得る。
+ADCがあってもquota project（課金・クォータの計上先GCPプロジェクト）が未設定だと、Sheets APIへのアクセスが `PERMISSION_DENIED` (`SERVICE_DISABLED`) で拒否される。Claude Memoryの `google_sheets_fetcher_quota_project.md` に過去に動作確認済みのプロジェクトIDが記録されていれば候補として提示する（記録が無ければユーザーに尋ねる）。いずれの場合も、以下のコマンドはユーザー環境の認証設定を変更するため、実行前に毎回ユーザーの許可を得る。
 
 ```bash
 gcloud auth application-default set-quota-project <PROJECT_ID>
 ```
 
-そのプロジェクトでGoogle Sheets APIが有効化されていない場合は `SERVICE_DISABLED` エラーになるので、その場合は表示されるAPI有効化用URLをユーザーに共有する。動作確認できたプロジェクトIDは `spreadsheet_fetcher_quota_project.md` に記録しておく（次回以降もコマンド実行前の確認自体は毎回行う）。
+そのプロジェクトでGoogle Sheets APIが有効化されていない場合は `SERVICE_DISABLED` エラーになるので、その場合は表示されるAPI有効化用URLをユーザーに共有する。動作確認できたプロジェクトIDは `google_sheets_fetcher_quota_project.md` に記録しておく（次回以降もコマンド実行前の確認自体は毎回行う）。
 
 ## Step 4: 実行
 
 ```bash
-uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/spreadsheet_fetcher.py <SPREADSHEET_URL_OR_ID> [<SPREADSHEET_URL_OR_ID> ...] \
+uv run ${CLAUDE_PLUGIN_ROOT:-.}/bin/google_sheets_fetcher.py <SPREADSHEET_URL_OR_ID> [<SPREADSHEET_URL_OR_ID> ...] \
   [--sheets Sheet1,Sheet2] \
   -o <output-dir>
 ```
