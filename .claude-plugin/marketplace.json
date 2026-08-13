@@ -9,7 +9,7 @@
       "name": "awesome-fetch",
       "source": "./",
       "description": "Confluence・GitHub Issue/PR・JIRA・PagerDuty・Slack・Google Sheets・Google プレゼンテーションのデータを取得し、Markdown/CSV/PDFとしてローカルに保存するfetcher系スキル集",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "mostlyfine",
         "email": "mostlyfine@gmail.com"
