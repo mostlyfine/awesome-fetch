@@ -57,7 +57,7 @@ allowed-tools: Bash Write Read AskUserQuestion mcp__claude_ai_Slack__slack_read_
    - 本文（`Time:`/`Message TS:`より下、次の区切りや`Reactions:`行より上の部分）→ `text`（本文中の `<@ID|handle>` のようなSlackマークアップはそのまま残してよい。整形はスクリプト側で行う）
    - `Reactions: name (count), name2 (count2)` → `reactions: [{"name": "name", "count": count}, ...]`（無ければ空配列）
 3. **発言者として出現した`user_id`のみ**（`From:`欄・現在ユーザーの自己判定分）について、Step 3で解決済みの現在ユーザー以外は `slack_read_user_profile(user_id=...)` を呼んで表示名を解決する。本文中のメンション（`<@ID|handle>`）に出てくるIDはメンションタグ自体にhandleが含まれておりスクリプト側で`@handle`に整形されるため、追加で解決する必要はない（発言者以外の全登場人物を解決すると呼び出し数が無制限に増えるため）
-   - 表示名は`slack_read_user_profile`が返す**Real Name**（`From:`行の表示と一致する方）を使う。Display Name（社内ハンドル名）ではない
+   - 表示名は`slack_read_user_profile`が返す**Display Name**（社内ハンドル名）を優先し、無ければ**Real Name**を使う。トークン経路（`resolve_users_via_api`）の解決順と揃えるため
 4. 次の形のJSONを一時ファイル（`<output-dir>/.raw/<channel_id>-<message_tsのピリオドをアンダースコアに置換した値>.json`）に `Write` する:
    ```json
    {
