@@ -9,16 +9,12 @@
 
 """Confluence ページを OKF 形式の Markdown ファイルとしてダウンロードする。
 
-■ 取得経路(2段構え)
-  1. MCP経路: claude.aiのAtlassian連携でClaudeが`getConfluencePage`を呼んで取得した
-     JSONを `--mcp-json` で渡す(このスクリプトはネットワークアクセスしない。指定ページ単体のみ、
-     `--depth`による子ページ再帰取得は非対応)
-  2. トークン経路: 環境変数 `CONFLUENCE_API_TOKEN` を使い、このスクリプトが直接Confluence
-     REST APIを呼んで取得する(子ページ再帰取得に対応)
+環境変数 `CONFLUENCE_API_TOKEN` を使い、このスクリプトが直接Confluence REST APIを
+呼んで取得する(子ページ再帰取得に対応)。
 
 ■ 環境変数
-  CONFLUENCE_API_TOKEN  API トークン（必須。トークン経路のみ）
-  CONFLUENCE_EMAIL      メールアドレス（Confluence Cloud の場合のみ必須。トークン経路のみ）
+  CONFLUENCE_API_TOKEN  API トークン（必須）
+  CONFLUENCE_EMAIL      メールアドレス（Confluence Cloud の場合のみ必須）
   CONFLUENCE_URL        Confluence のベース URL（--url の省略時に使用）
 
 ■ 使い方
@@ -27,9 +23,7 @@
 
   uv run scripts/confluence_downloader.py \\
     --url https://your-domain.atlassian.net/wiki \\
-    --page-id 123456789 [--depth 2] [-o .] [--wait 0.5]
-  uv run scripts/confluence_downloader.py \\
-    --url https://your-domain.atlassian.net/wiki --page-id 123456789 --mcp-json raw.json -o .
+    --page-id 123456789 [--page-id 987654321 ...] [--depth 2] [-o .] [--wait 0.5]
 """
 
 import argparse
@@ -49,12 +43,17 @@ from markdownify import markdownify as md
 
 logger = logging.getLogger(__name__)
 
+REQUEST_TIMEOUT_SECONDS = 30
+MAX_DEPTH = 50
+
 _SANITIZE_RE = re.compile(r'[\\/:*?"<>|\s]+')
 _PAGE_ID_RE = re.compile(r"pageId=(\d+)")
 _PAGES_PATH_RE = re.compile(r"/pages/(\d+)")
 _RI_PAGE_RE = re.compile(r"<ri:page\b([^>]*?)/>")
 _RI_TITLE_RE = re.compile(r'ri:content-title="([^"]*)"')
 _RI_SPACE_RE = re.compile(r'ri:space-key="([^"]*)"')
+_FILENAME_PAGE_ID_RE = re.compile(r"_(\d+)\.md$")
+_MD_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)')
 
 
 def _is_cloud(base_url: str) -> bool:
@@ -95,6 +94,16 @@ def _page_url(base_url: str, page_id: str) -> str:
     return f"{base_url}/pages/viewpage.action?pageId={page_id}"
 
 
+def format_confluence_timestamp(when: str) -> str:
+    """Confluence の `version.when`（例: `2017-12-11T03:52:47.153Z`）をfrontmatter用の秒精度ISO8601に正規化する。
+
+    ミリ秒有無に関わらず出力を安定させ、ページ内容が変わらない限り同じ文字列になるようにする
+    （差分検出時に無意味なtimestamp差分が発生するのを防ぐため）。
+    """
+    parsed = datetime.datetime.fromisoformat(when.replace("Z", "+00:00"))
+    return parsed.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def save_markdown(
     output_dir: str,
     title: str,
@@ -102,12 +111,16 @@ def save_markdown(
     content: str,
     base_url: str,
     references: list[str] | None = None,
+    updated_at: str | None = None,
 ) -> str:
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
     filename = f"{sanitize_filename(title)}_{sanitize_filename(page_id)}.md"
     filepath = output_path / filename
-    timestamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if updated_at is not None:
+        timestamp = format_confluence_timestamp(updated_at)
+    else:
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     refs_line = f"references: {json.dumps(references)}\n" if references else ""
     frontmatter = (
         "---\n"
@@ -122,8 +135,12 @@ def save_markdown(
     return str(filepath)
 
 
+def _find_page_ids(text: str) -> list[str]:
+    return _PAGE_ID_RE.findall(text) + _PAGES_PATH_RE.findall(text)
+
+
 def extract_page_ids(view_html: str, current_page_id: str) -> list[str]:
-    ids = set(_PAGE_ID_RE.findall(view_html) + _PAGES_PATH_RE.findall(view_html))
+    ids = set(_find_page_ids(view_html))
     ids.discard(current_page_id)
     return sorted(ids)
 
@@ -156,20 +173,20 @@ def resolve_page_refs(
             params: dict = {"title": title, "type": "page", "limit": 1}
             if space_key:
                 params["spaceKey"] = space_key
-            resp = session.get(url, params=params)
+            resp = session.get(url, params=params, timeout=REQUEST_TIMEOUT_SECONDS)
             resp.raise_for_status()
             results = resp.json().get("results", [])
             if results:
                 ids.add(results[0]["id"])
-        except requests.RequestException:
-            pass
+        except requests.RequestException as exc:
+            logger.debug("Failed to resolve ref (%s, %s): %s", space_key, title, exc)
     ids.discard(current_page_id)
     return sorted(ids)
 
 
 def fetch_page(session: requests.Session, base_url: str, page_id: str) -> dict:
     url = f"{_api_base(base_url)}/{page_id}"
-    response = session.get(url, params={"expand": "body.storage,body.view"})
+    response = session.get(url, params={"expand": "body.storage,body.view,version"}, timeout=REQUEST_TIMEOUT_SECONDS)
     response.raise_for_status()
     return response.json()
 
@@ -180,7 +197,7 @@ def fetch_children(session: requests.Session, base_url: str, page_id: str) -> li
     start = 0
     limit = 25
     while True:
-        response = session.get(url, params={"start": start, "limit": limit})
+        response = session.get(url, params={"start": start, "limit": limit}, timeout=REQUEST_TIMEOUT_SECONDS)
         response.raise_for_status()
         data = response.json()
         results = data.get("results", [])
@@ -219,8 +236,9 @@ def process_page(
         html = page["body"]["storage"]["value"]
         references = _get_references(page, session, base_url, page_id)
         markdown = html_to_markdown(html)
+        updated_at = page.get("version", {}).get("when")
         if markdown.strip():
-            path = save_markdown(output_dir, title, page_id, markdown, base_url, references)
+            path = save_markdown(output_dir, title, page_id, markdown, base_url, references, updated_at)
             logger.info(f"Saved: {path}")
             stats["saved"] += 1
         else:
@@ -240,24 +258,47 @@ def process_page(
         stats["skipped"] += 1
 
 
-def process_page_from_mcp_json(mcp_json_path: str, page_id: str, output_dir: str, base_url: str, stats: dict) -> None:
-    """MCPツール(`getConfluencePage`)が返したJSONから単一ページを保存する。子ページ再帰取得は非対応。"""
-    try:
-        page = json.loads(Path(mcp_json_path).read_text(encoding="utf-8"))
-        title = page["title"]
-        html = page["body"]["storage"]["value"]
-    except (KeyError, json.JSONDecodeError) as e:
-        logger.warning(f"Failed to parse MCP JSON for page {page_id}: {e}, skipping")
-        stats["skipped"] += 1
-        return
+def _extract_page_id_from_url(url: str) -> str | None:
+    ids = _find_page_ids(url)
+    return ids[0] if ids else None
 
-    markdown = html_to_markdown(html)
-    if markdown.strip():
-        path = save_markdown(output_dir, title, page_id, markdown, base_url)
-        logger.info(f"Saved: {path}")
-        stats["saved"] += 1
-    else:
-        logger.info(f"Skipped (empty content): {page_id}")
+
+def _build_page_id_to_path(paths: list[Path]) -> dict[str, Path]:
+    mapping: dict[str, Path] = {}
+    for path in paths:
+        m = _FILENAME_PAGE_ID_RE.search(path.name)
+        if m:
+            mapping[m.group(1)] = path
+    return mapping
+
+
+def relink_local_files(root_dir: str) -> int:
+    """保存済みMarkdown本文中のConfluenceリンクのうち、ローカルにダウンロード済みのページを
+    指すものを相対パスに張り替える。戻り値は張り替えた件数。
+    """
+    paths = list(Path(root_dir).rglob("*.md"))
+    id_to_path = _build_page_id_to_path(paths)
+    if not id_to_path:
+        return 0
+
+    relinked = 0
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+
+        def _replace(m: re.Match) -> str:
+            nonlocal relinked
+            label, url = m.group(1), m.group(2)
+            page_id = _extract_page_id_from_url(url)
+            target = id_to_path.get(page_id) if page_id else None
+            if target is None or target == path:
+                return m.group(0)
+            relinked += 1
+            return f"[{label}]({os.path.relpath(target, start=path.parent)})"
+
+        new_text = _MD_LINK_RE.sub(_replace, text)
+        if new_text != text:
+            path.write_text(new_text, encoding="utf-8")
+    return relinked
 
 
 def main() -> None:
@@ -268,23 +309,36 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "例:\n"
-            "  uv run scripts/confluence_downloader.py --url https://example.atlassian.net/wiki --page-id 123456 -o .\n"
-            "  uv run scripts/confluence_downloader.py --page-id 123456 --depth 2 -o .\n"
+            "  uv run scripts/confluence_downloader.py -u https://example.atlassian.net/wiki -p 123456 -o .\n"
+            "  uv run scripts/confluence_downloader.py -p 123456 -d 2 -o .\n"
+            "  uv run scripts/confluence_downloader.py -p 123456 -p 789012 -d 2 -o .\n"
         ),
     )
-    parser.add_argument("--url", default=None, help="Confluence のベース URL（省略時は CONFLUENCE_URL 環境変数）")
-    parser.add_argument("--page-id", required=True, help="ダウンロード対象のページ ID")
-    parser.add_argument("--depth", type=int, default=0, help="子ページの取得深さ（デフォルト: 0）")
+    parser.add_argument("-u", "--url", default=None, help="Confluence のベース URL（省略時は CONFLUENCE_URL 環境変数）")
+    parser.add_argument(
+        "-p", "--page-id", required=True, action="append", help="ダウンロード対象のページ ID（複数指定可）"
+    )
+    parser.add_argument(
+        "-d",
+        "--depth",
+        type=int,
+        default=0,
+        help=f"子ページの取得深さ（デフォルト: 0、上限: {MAX_DEPTH}）",
+    )
     parser.add_argument("-o", "--output", metavar="DIR", default=".", help="出力先ディレクトリ")
     parser.add_argument(
+        "-w",
         "--wait",
         type=float,
         default=1.0,
         metavar="SECONDS",
         help="ページ取得間の待機秒数（デフォルト: 1.0）",
     )
-    parser.add_argument("--mcp-json", metavar="PATH", default=None, help="MCPツールで取得済みのページJSON。指定時は--depthを無視し指定ページ単体のみ処理する")
     args = parser.parse_args()
+
+    if args.depth > MAX_DEPTH:
+        logger.error(f"--depth は {MAX_DEPTH} 以下で指定してください（指定値: {args.depth}）")
+        sys.exit(1)
 
     base_url = (args.url or os.environ.get("CONFLUENCE_URL", "")).rstrip("/")
     if base_url and "://" not in base_url:
@@ -294,12 +348,6 @@ def main() -> None:
         sys.exit(1)
 
     stats = {"saved": 0, "skipped": 0}
-
-    if args.mcp_json:
-        logger.info(f"Fetching page (MCP): {args.page_id}")
-        process_page_from_mcp_json(args.mcp_json, args.page_id, args.output, base_url, stats)
-        logger.info(f"Done. {stats['saved']} pages saved, {stats['skipped']} skipped.")
-        return
 
     token = os.environ.get("CONFLUENCE_API_TOKEN", "")
     email = os.environ.get("CONFLUENCE_EMAIL", "")
@@ -319,10 +367,13 @@ def main() -> None:
     session = requests.Session()
     session.headers.update(headers)
 
-    logger.info(f"Fetching page: {args.page_id}")
-    process_page(session, base_url, args.page_id, args.output, args.depth, stats, args.wait)
+    for page_id in args.page_id:
+        logger.info(f"Fetching page: {page_id}")
+        process_page(session, base_url, page_id, args.output, args.depth, stats, args.wait)
 
     logger.info(f"Done. {stats['saved']} pages saved, {stats['skipped']} skipped.")
+    relinked = relink_local_files(args.output)
+    logger.info(f"Relinked {relinked} links to local files.")
 
 
 if __name__ == "__main__":
