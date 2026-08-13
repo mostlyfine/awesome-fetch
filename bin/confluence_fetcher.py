@@ -21,7 +21,7 @@
   export CONFLUENCE_API_TOKEN=<token>
   export CONFLUENCE_EMAIL=<email>   # Cloud の場合のみ
 
-  uv run scripts/confluence_downloader.py \\
+  uv run scripts/confluence_fetcher.py \\
     --url https://your-domain.atlassian.net/wiki \\
     --page-id 123456789 [--page-id 987654321 ...] [--depth 2] [-o .] [--wait 0.5]
 """
@@ -309,9 +309,9 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "例:\n"
-            "  uv run scripts/confluence_downloader.py -u https://example.atlassian.net/wiki -p 123456 -o .\n"
-            "  uv run scripts/confluence_downloader.py -p 123456 -d 2 -o .\n"
-            "  uv run scripts/confluence_downloader.py -p 123456 -p 789012 -d 2 -o .\n"
+            "  uv run scripts/confluence_fetcher.py -u https://example.atlassian.net/wiki -p 123456 -o .\n"
+            "  uv run scripts/confluence_fetcher.py -p 123456 -d 2 -o .\n"
+            "  uv run scripts/confluence_fetcher.py -p 123456 -p 789012 -d 2 -o .\n"
         ),
     )
     parser.add_argument("-u", "--url", default=None, help="Confluence のベース URL（省略時は CONFLUENCE_URL 環境変数）")
