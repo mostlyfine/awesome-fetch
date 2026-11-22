@@ -163,4 +163,14 @@ def build(left, right, n_tabs=None):
             if other.distance(eb) < 0.05:
                 holes += mousebite_holes(eb)
     panel = unary_union([left, right, fr] + tabs)
+    panel = clean(panel)
     return panel, holes, tabs
+
+
+def clean(g):
+    """Snap to a 1 um grid and drop near-duplicate vertices (KiCad is strict
+    about self-touching outlines)."""
+    import shapely
+    g = shapely.set_precision(g, 0.001)
+    g = g.simplify(0.005)
+    return shapely.make_valid(g)

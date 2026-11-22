@@ -8,41 +8,40 @@ import layout as L  # noqa: E402
 
 FW = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "firmware", "boards", "shields", "tsuki65")
 
-# visual order: per row, left c0..c6 then right c6..c0
+SPLIT_GAP = 2.0  # visual gap (U) between the halves in the physical layout
+
+
+# visual order: per row, left keys then right keys, each left-to-right
 def ordered():
-    ks = {(k["r"], k["c"]): k for k in L.keys()}
     out = []
     for r in range(5):
-        for c in range(7):
-            if (r, c) in ks:
-                out.append(("L", ks[(r, c)]))
-        for c in reversed(range(7)):
-            if (r, c) in ks:
-                out.append(("R", ks[(r, c)]))
+        for side in ("L", "R"):
+            row = [k for k in L.keys(side) if k["r"] == r and not k["tb"]]
+            out += [(side, k) for k in sorted(row, key=lambda k: k["xv"])]
     return out
 
 
-# default keymap, same order as ordered()
+# default keymap, same order as ordered()  (row lengths 14/13/13/13/12)
 BASE = """
-&kp ESC    &kp N1   &kp N2   &kp N3   &kp N4   &kp N5    &kp GRAVE     &mkp LCLK  &kp N6     &kp N7  &kp N8     &kp N9   &kp N0    &kp MINUS
-&kp TAB    &kp Q    &kp W    &kp E    &kp R    &kp T     &kp LBKT      &mkp MCLK  &kp Y      &kp U   &kp I      &kp O    &kp P     &kp EQUAL
-&kp LCTRL  &kp A    &kp S    &kp D    &kp F    &kp G     &kp RBKT      &mkp RCLK  &kp H      &kp J   &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LSHFT  &kp Z    &kp X    &kp C    &kp V    &kp B                              &kp N      &kp M   &kp COMMA  &kp DOT  &kp FSLH  &kp RSHFT
-&mo 2      &kp LGUI &kp LALT &mo 1    &kp BSPC &kp SPACE                          &kp RET    &mo 1   &kp LEFT   &kp DOWN &kp UP    &kp RIGHT
+&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4    &kp N5    &kp N6     &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL &kp BSPC
+&kp TAB   &kp Q    &kp W    &kp E    &kp R     &kp T     &kp Y      &kp U     &kp I     &kp O     &kp P     &kp LBKT  &kp RBKT
+&kp LCTRL &kp A    &kp S    &kp D    &kp F     &kp G     &kp H      &kp J     &kp K     &kp L     &kp SEMI  &kp SQT   &kp RET
+&kp LSHFT &kp Z    &kp X    &kp C    &kp V     &kp B     &kp N      &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT &kp UP
+&mo 2     &kp LGUI &kp LALT &mo 1    &kp BSPC  &kp SPACE &kp SPACE  &mo 1     &kp RALT  &kp LEFT  &kp DOWN  &kp RIGHT
 """
 LOWER = """
-&kp GRAVE  &kp F1   &kp F2   &kp F3   &kp F4   &kp F5    &kp F6        &kp F7     &kp F8     &kp F9    &kp F10    &kp F11   &kp F12   &kp DEL
-&trans     &trans   &trans   &trans   &trans   &trans    &trans        &trans     &kp HOME   &kp PG_DN &kp PG_UP  &kp END   &kp PSCRN &kp BSLH
-&kp CAPS   &trans   &trans   &trans   &trans   &trans    &trans        &trans     &kp LEFT   &kp DOWN  &kp UP     &kp RIGHT &trans    &trans
-&trans     &trans   &trans   &trans   &trans   &trans                             &trans     &trans    &trans     &trans    &trans    &trans
-&trans     &trans   &trans   &trans   &kp DEL  &trans                             &trans     &trans    &kp HOME   &kp PG_DN &kp PG_UP &kp END
+&kp GRAVE &kp F1   &kp F2   &kp F3   &kp F4    &kp F5    &kp F6     &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12   &kp DEL
+&trans    &trans   &trans   &trans   &trans    &trans    &kp HOME   &kp PG_DN &kp PG_UP &kp END   &kp PSCRN &trans    &kp BSLH
+&kp CAPS  &trans   &trans   &trans   &trans    &trans    &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT &trans    &trans    &trans
+&trans    &trans   &trans   &trans   &trans    &trans    &mkp LCLK  &mkp RCLK &mkp MCLK &trans    &trans    &trans    &kp PG_UP
+&trans    &trans   &trans   &trans   &kp DEL   &trans    &trans     &trans    &trans    &kp HOME  &kp PG_DN &kp END
 """
 SYSTEM = """
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &bootloader
-&trans     &out OUT_USB &out OUT_BLE &trans       &trans       &trans       &trans  &trans  &trans  &trans  &trans  &trans  &trans  &sys_reset
-&trans     &trans       &trans       &trans       &trans       &trans       &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans     &trans       &trans       &trans       &trans       &trans                       &trans  &trans  &trans  &trans  &trans  &trans
-&trans     &trans       &trans       &trans       &trans       &trans                       &trans  &trans  &trans  &trans  &trans  &trans
+&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans &trans &trans &trans &trans &trans &trans &bootloader
+&trans &out OUT_USB &out OUT_BLE &trans &trans &trans &trans &trans &trans &trans &trans &trans &sys_reset
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 """
 
 
@@ -63,15 +62,11 @@ def main():
     transform = "\n".join("            " + " ".join(r) for r in rows)
 
     # ---- physical layout (1U = 17 mm = 100)
-    MXV = 290.0  # visual mirror axis for the right half
-
-    def u(v):
-        return int(round(v / L.P * 100))
     phys = []
     for side, k in ks:
-        cx = k["x"] if side == "L" else MXV - k["x"]
-        x = u(cx - 8.5 + 8.5)
-        y = u(k["y"] - 8.5 + 8.5)
+        xv = k["xv"] - 0.5 + (SPLIT_GAP if side == "R" else 0)
+        x = int(round(xv * 100))
+        y = int(round(k["r"] * 100))
         phys.append(f"<&key_physical_attrs 100 100 {x:5d} {y:5d} 0 0 0>")
     phys_s = "\n            , ".join(phys)
 
@@ -79,7 +74,7 @@ def main():
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 
-/* generated by scripts/gen_fw.py -- {n} key positions (right r1/c6 = 14 mm trackball) */
+/* generated by scripts/gen_fw.py -- {n} keys, row-staggered; the 14 mm trackball is not in the matrix */
 
 / {{
     chosen {{

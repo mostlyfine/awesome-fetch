@@ -54,11 +54,12 @@ def build_half(board, nets, side, T):
         return fp
 
     # ---- keys -------------------------------------------------------------
-    for i, k in enumerate(sorted(L.keys(), key=lambda k: (k["r"], k["c"]))):
+    ks = [k for k in L.keys(side) if not k["tb"]]
+    for i, k in enumerate(sorted(ks, key=lambda k: (k["r"], k["xv"]))):
         idx = ref0 + i + 1
         dk = f"D{idx}_K"
-        sw = put("CHOC_V2_SOCKET_HANDSOLDERING", f"SW{idx}", k["x"], k["y"], 0, True,
-                 {"1": f"COL{k['c']}", "2": dk})
+        put("CHOC_V2_SOCKET_HANDSOLDERING", f"SW{idx}", k["x"], k["y"], 0, True,
+            {"1": f"COL{k['c']}", "2": dk})
         # diode NE of the switch centre (same relative place as torabo-tsuki LP);
         # x offset is not mirrored because the socket footprint is not mirrored.
         X, Y = T(k["x"], k["y"])
@@ -66,15 +67,18 @@ def build_half(board, nets, side, T):
         d.SetValue(LCSC["D_SOD-123"][0])
         d.SetProperty("LCSC", LCSC["D_SOD-123"][1])
         set_pad_nets(d, nets, {"1": n(dk), "2": n(f"ROW{k['r']}")})
-        if k["tb"]:
-            # FPC connector for the 14 mm sensor module (cable goes through the
-            # switch centre hole).  North-west of the centre, clear of the
-            # socket; contacts face west (into the gap between columns).
-            j = place(board, "GT-F0501SR10-06S1101", f"J{ref0 + 1}", X - 4.3, Y - 5.8, 270, True)
-            j.SetValue(LCSC["GT-F0501SR10-06S1101"][0])
-            j.SetProperty("LCSC", LCSC["GT-F0501SR10-06S1101"][1])
-            set_pad_nets(j, nets, {"1": n("GND"), "2": n("SCLK"), "3": n("SDIO"), "4": n("MOTION"),
-                                   "5": n("CS"), "6": n("VCC"), "MP": n("GND")})
+    for k in L.keys(side):
+        if not k["tb"]:
+            continue
+        # 14 mm trackball slot (maghold case in a 14 x 14 plate hole): no switch,
+        # only a 4.8 mm hole for the FFC and the FPC connector next to it.
+        X, Y = T(k["x"], k["y"])
+        npth(board, f"HTB{side}", X, Y, 4.8)
+        j = place(board, "GT-F0501SR10-06S1101", f"J{ref0 + 1}", X - 4.3, Y - 5.8, 270, True)
+        j.SetValue(LCSC["GT-F0501SR10-06S1101"][0])
+        j.SetProperty("LCSC", LCSC["GT-F0501SR10-06S1101"][1])
+        set_pad_nets(j, nets, {"1": n("GND"), "2": n("SCLK"), "3": n("SDIO"), "4": n("MOTION"),
+                               "5": n("CS"), "6": n("VCC"), "MP": n("GND")})
 
     # ---- controller block (torabo-tsuki LP geometry) ------------------------
     sgn = 1 if side == "L" else -1
@@ -121,7 +125,7 @@ def build_half(board, nets, side, T):
     set_pad_nets(r, nets, {"1": n("LEDK"), "2": n("GND")})
 
     # spacer holes
-    for i, h in enumerate(L.HOLES):
+    for i, h in enumerate(L.holes(side)):
         X, Y = T(*h)
         place(board, "MountingHole_5mm", f"H{ref0 + 60 + i}", X, Y)
 
@@ -130,7 +134,7 @@ def build_half(board, nets, side, T):
     text(board, "tsuki65 " + ("LEFT" if side == "L" else "RIGHT"), X, Y, 1.2,
          pcbnew.B_SilkS, 0, True)
     X, Y = T(*L.O(-19, 46))
-    text(board, "17mm / Choc V2 / 14mm TB", X, Y, 1.0, pcbnew.B_SilkS, 0, True)
+    text(board, "row stagger / 17mm / Choc V2" + (" / 14mm TB" if side == "R" else ""), X, Y, 1.0, pcbnew.B_SilkS, 0, True)
     return sgn
 
 

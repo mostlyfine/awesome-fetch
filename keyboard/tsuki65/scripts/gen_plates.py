@@ -16,11 +16,11 @@ SW_HOLE = 13.8      # Kailh Choc V1/V2 plate cutout
 TB_HOLE = 14.0      # maghold 14 mm trackball case (14 x 14 x 2.2 mm plug)
 
 
-def cutouts(tb_side):
-    """Switch cutouts for the LEFT half (local coords)."""
+def cutouts(side):
+    """Switch / trackball cutouts (local coords)."""
     out = []
-    for k in L.keys():
-        s = TB_HOLE if (k["tb"] and tb_side) else SW_HOLE
+    for k in L.keys(side):
+        s = TB_HOLE if k["tb"] else SW_HOLE
         h = s / 2
         out.append(L.rect(k["x"] - h, k["y"] - h, k["x"] + h, k["y"] + h))
     return unary_union(out)
@@ -33,8 +33,8 @@ def build(kind):
     left = fn("L")
     right_local = fn("R")
     if kind == "top":
-        left = left.difference(cutouts(False))
-        right_local = right_local.difference(cutouts(True))
+        left = left.difference(cutouts("L"))
+        right_local = right_local.difference(cutouts("R"))
     rm = affinity.scale(right_local, xfact=-1, yfact=1, origin=(mx / 2, 0))
     # use the same vertical offset as the main PCB so all three panels line up
     import gen_main
@@ -53,12 +53,12 @@ def build(kind):
     # put the inner cut-outs back
     inner = unary_union([type(left)(r) for r in left.interiors] +
                         [type(right)(r) for r in right.interiors])
-    pnl = pnl.difference(inner)
+    pnl = panel.clean(pnl.difference(inner))
     draw_polygon_edges(board, pnl)
     for i, p in enumerate(holes):
         npth(board, f"MB{i}", p.x, p.y, panel.HOLE_D)
     for side, T in (("L", lambda x, y: (x, y)), ("R", lambda x, y: (mx - x, y + dy))):
-        for i, h in enumerate(L.HOLES):
+        for i, h in enumerate(L.holes(side)):
             X, Y = T(*h)
             npth(board, f"H{side}{i}", X, Y, L.PLATE_HOLE)
     title = "tsuki65 top plate (FR4 1.2 mm, no copper)" if kind == "top" else \

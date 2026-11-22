@@ -27,39 +27,24 @@ def pcb_png(name, layers, out, width=1400):
 
 
 def layout_png():
-    BASE = ["ESC 1 2 3 4 5 ` | LClk 6 7 8 9 0 -", "Tab Q W E R T [ | TB Y U I O P =",
-            "Ctrl A S D F G ] | RClk H J K L ; '", "Shift Z X C V B | N M , . / Shift",
-            "Fn Gui Alt Lower BS Spc | Ent Lower ← ↓ ↑ →"]
-    fig, ax = plt.subplots(figsize=(14, 5.2))
-    mxv = 290.0
-    rows = [r.replace(" | ", " ").split(" ") for r in BASE]
-    ks = {(k["r"], k["c"]): k for k in L.keys()}
-    for r in range(5):
-        labels = rows[r]
-        i = 0
-        order = [("L", c) for c in range(7) if (r, c) in ks] + [("R", c) for c in reversed(range(7)) if (r, c) in ks]
-        for side, c in order:
-            k = ks[(r, c)]
-            x = k["x"] if side == "L" else mxv - k["x"]
-            y = k["y"]
-            tb = side == "R" and k["tb"]
-            if tb:
+    fig, ax = plt.subplots(figsize=(15, 4.6))
+    gap = 2.5   # visual gap between halves (U)
+    for side in ("L", "R"):
+        for k in L.keys(side):
+            x = (k["xv"] + (gap if side == "R" else 0)) * L.P
+            y = k["r"] * L.P
+            if k["tb"]:
                 ax.add_patch(plt.Rectangle((x - 8.25, y - 8.25), 16.5, 16.5, fc="#eeeeee", ec="#999"))
                 ax.add_patch(plt.Circle((x, y), 7, fc="#d9534f", ec="#822"))
                 ax.text(x, y, "14mm\nTB", ha="center", va="center", fontsize=7, color="white")
             else:
                 ax.add_patch(plt.Rectangle((x - 8.0, y - 8.0), 16.0, 16.0, fc="#f7f7f2", ec="#555", lw=1))
-                ax.text(x, y, labels[i], ha="center", va="center", fontsize=8)
-            i += 1
-    for side in ("L", "R"):
-        bx = L.OX - 19 if side == "L" else mxv - (L.OX - 19)
-        ax.add_patch(plt.Rectangle((bx - 9, L.OY), 18, 33, fc="#cfe3ff", ec="#36c", ls="--"))
-        ax.text(bx, L.OY + 16, "BMP\nBoost", ha="center", va="center", fontsize=8, color="#236")
-    ax.set_xlim(-15, 305)
-    ax.set_ylim(95, -15)
+                ax.text(x, y, k["label"], ha="center", va="center", fontsize=8)
+    ax.set_xlim(-12, (15.25 + gap) * L.P + 12)
+    ax.set_ylim(4 * L.P + 12, -12)
     ax.set_aspect("equal")
     ax.axis("off")
-    ax.set_title("tsuki65 — column-staggered 65% split, 17 mm pitch, Choc V2, 14 mm trackball (default keymap)")
+    ax.set_title("tsuki65 — row-staggered 65% split, 17 mm pitch, Choc V2, 14 mm trackball (default keymap)")
     fig.savefig(os.path.join(IMG, "layout.png"), dpi=110, bbox_inches="tight")
 
 
