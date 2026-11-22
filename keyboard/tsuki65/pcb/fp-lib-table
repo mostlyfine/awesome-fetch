@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "tsuki65")(type "KiCad")(uri "${KIPRJMOD}/tsuki65.pretty")(options "")(descr "tsuki65 footprints (converted from torabo-tsuki LP, MIT)"))
+)

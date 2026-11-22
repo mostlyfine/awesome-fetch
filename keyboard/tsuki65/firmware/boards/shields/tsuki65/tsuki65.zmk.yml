@@ -1,0 +1,15 @@
+file_format: "1"
+id: tsuki65
+name: tsuki65
+type: shield
+url: https://github.com/sekigon-gonnoc/torabo-tsuki-lp
+features:
+  - keys
+  - studio
+  - pointer
+outputs:
+  - usb
+  - ble
+siblings:
+  - tsuki65_left
+  - tsuki65_right

@@ -1,0 +1,117 @@
+(footprint "GT-F0501SR10-06S1101"
+  (version 20221018)
+  (generator "pcbnew")
+  (layer "F.Cu")
+  (fp_text reference "REF**"
+    (at -1.25 -3 0)
+    (layer "F.SilkS")
+    (effects
+      (font
+        (size 1.143 1.143)
+        (thickness 0.152))
+      (justify right)))
+  (fp_text value "Conn_01x06_MountingPin"
+    (at -0.07 -3.944 0)
+    (layer "F.Fab") hide
+    (effects
+      (font
+        (size 1.143 1.143)
+        (thickness 0.152))
+      (justify right)))
+  (attr smd)
+  (fp_line
+    (start 2.452 -1.087)
+    (end 2.452 0.48)
+    (stroke
+      (width 0.254)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start 1.631 -1.077)
+    (end 2.452 -1.077)
+    (stroke
+      (width 0.254)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -2.448 2.296)
+    (end 2.452 2.296)
+    (stroke
+      (width 0.254)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -2.448 -1.077)
+    (end -1.631 -1.077)
+    (stroke
+      (width 0.254)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_line
+    (start -2.461 -1.074)
+    (end -2.448 0.48)
+    (stroke
+      (width 0.254)
+      (type solid))
+    (layer "F.SilkS"))
+  (fp_circle
+    (center -1.998 -1.5)
+    (end -1.898 -1.5)
+    (stroke
+      (width 0.2)
+      (type solid))
+    (fill none)
+    (layer "F.SilkS"))
+  (fp_line
+    (start 1.502 0)
+    (end 1.502 2)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (layer "Cmts.User"))
+  (fp_line
+    (start -1.498 2)
+    (end -1.498 0)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (layer "Cmts.User"))
+  (fp_line
+    (start -1.498 0)
+    (end 1.502 0)
+    (stroke
+      (width 0.12)
+      (type solid))
+    (layer "Cmts.User"))
+  (pad "1" smd rect
+    (at -1.25 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "2" smd rect
+    (at -0.75 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "3" smd rect
+    (at -0.25 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "4" smd rect
+    (at 0.25 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "5" smd rect
+    (at 0.75 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "6" smd rect
+    (at 1.25 -1.406 180)
+    (size 0.3 0.65)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "MP" smd rect
+    (at -2.148 1.406 180)
+    (size 0.5 1.15)
+    (layers "F.Cu" "F.Paste" "F.Mask"))
+  (pad "MP" smd rect
+    (at 2.152 1.406 180)
+    (size 0.5 1.15)
+    (layers "F.Cu" "F.Paste" "F.Mask")))

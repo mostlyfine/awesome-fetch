@@ -1,0 +1,18 @@
+if SHIELD_TSUKI65_LEFT || SHIELD_TSUKI65_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "tsuki65"
+
+config ZMK_SPLIT
+    default y
+
+config SPI
+    default y
+
+config INPUT
+    default y
+
+config ZMK_MOUSE
+    default y
+
+endif

@@ -1,0 +1,15 @@
+#include "tsuki65.dtsi"
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+&default_transform {
+    col-offset = <7>;
+};
+
+/*
+ * 14 mm maghold case: if the cursor moves in the wrong direction, change the
+ * flags below (e.g. INPUT_TRANSFORM_XY_SWAP, only X_INVERT, only Y_INVERT ...).
+ */
+&pointing_listener {
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+};

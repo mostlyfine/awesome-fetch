@@ -1,0 +1,5 @@
+config SHIELD_TSUKI65_LEFT
+    def_bool $(shields_list_contains,tsuki65_left)
+
+config SHIELD_TSUKI65_RIGHT
+    def_bool $(shields_list_contains,tsuki65_right)

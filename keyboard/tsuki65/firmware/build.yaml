@@ -1,0 +1,13 @@
+# Trackball on the RIGHT half -> right half is the central (connects to the PC)
+include:
+  - board: bmp_boost
+    shield: tsuki65_right
+    snippet: "studio-rpc-usb-uart split-central input-trackball input-listener"
+    artifact-name: tsuki65_right_central
+  - board: bmp_boost
+    shield: tsuki65_left
+    snippet: studio-rpc-usb-uart
+    artifact-name: tsuki65_left_peripheral
+  - board: bmp_boost
+    shield: settings_reset
+    artifact-name: settings_reset
