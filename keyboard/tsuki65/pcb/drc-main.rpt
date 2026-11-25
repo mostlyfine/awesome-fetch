@@ -1,805 +1,895 @@
 ** Drc report for /home/user/awesome-fetch/keyboard/tsuki65/scripts/../pcb/tsuki65-main.kicad_pcb **
-** Created on 2026-11-25 16:56:18 **
+** Created on 2026-11-25 23:58:45 **
 
-** Found 260 DRC violations **
+** Found 290 DRC violations **
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; Severity: warning
-    @(-3.6536 mm, 22.6200 mm): Line on B.Silkscreen
-    @(-3.5000 mm, 22.6300 mm): Reference 'LED101'
+    @(137.4000 mm, 114.5800 mm): Reference 'LED201'
+    @(137.2464 mm, 114.5700 mm): Line on B.Silkscreen
 [silk_overlap]: Silkscreen overlap
     Rule: board setup constraints silk; Severity: warning
-    @(136.4000 mm, 153.6300 mm): Reference 'LED201'
-    @(136.2464 mm, 153.6200 mm): Line on B.Silkscreen
+    @(-3.5000 mm, 5.6300 mm): Reference 'LED101'
+    @(-3.6536 mm, 5.6200 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.1990 mm, 70.4000 mm): Line on B.Silkscreen
+    @(61.5990 mm, 130.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.2000 mm, 73.3500 mm): Line on B.Silkscreen
+    @(61.6000 mm, 133.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(71.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(71.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 75.2000 mm): Line on B.Silkscreen
+    @(71.2000 mm, 135.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 75.4000 mm): Line on B.Silkscreen
+    @(71.2000 mm, 135.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.8500 mm, 73.3500 mm): Arc on B.Silkscreen
+    @(62.2500 mm, 133.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.5000 mm, 75.0000 mm): Line on F.Silkscreen
+    @(61.9000 mm, 134.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(29.4510 mm, 148.8000 mm): Line on B.Silkscreen
+    @(37.0510 mm, 31.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(29.4500 mm, 145.8500 mm): Line on B.Silkscreen
+    @(37.0500 mm, 28.6500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(19.8500 mm, 146.9500 mm): Line on B.Silkscreen
+    @(27.4500 mm, 29.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(19.8500 mm, 146.9500 mm): Line on B.Silkscreen
+    @(27.4500 mm, 29.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(19.8500 mm, 144.0000 mm): Line on B.Silkscreen
+    @(27.4500 mm, 26.8000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(19.8500 mm, 143.8000 mm): Line on B.Silkscreen
+    @(27.4500 mm, 26.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(28.8000 mm, 145.8500 mm): Arc on B.Silkscreen
+    @(36.4000 mm, 28.6500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(29.1500 mm, 144.2000 mm): Line on F.Silkscreen
+    @(36.7500 mm, 27.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(52.1990 mm, 2.4000 mm): Line on B.Silkscreen
+    @(90.4490 mm, 36.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(52.2000 mm, 5.3500 mm): Line on B.Silkscreen
+    @(90.4500 mm, 39.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(61.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(100.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(61.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(100.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(61.8000 mm, 7.2000 mm): Line on B.Silkscreen
+    @(100.0500 mm, 41.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(61.8000 mm, 7.4000 mm): Line on B.Silkscreen
+    @(100.0500 mm, 41.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(52.8500 mm, 5.3500 mm): Arc on B.Silkscreen
+    @(91.1000 mm, 39.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(52.5000 mm, 7.0000 mm): Line on F.Silkscreen
+    @(90.7500 mm, 41.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(56.4490 mm, 53.4000 mm): Line on B.Silkscreen
+    @(70.0990 mm, 79.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(56.4500 mm, 56.3500 mm): Line on B.Silkscreen
+    @(70.1000 mm, 82.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(66.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(79.7000 mm, 81.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(66.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(79.7000 mm, 81.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(66.0500 mm, 58.2000 mm): Line on B.Silkscreen
+    @(79.7000 mm, 84.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(66.0500 mm, 58.4000 mm): Line on B.Silkscreen
+    @(79.7000 mm, 84.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(57.1000 mm, 56.3500 mm): Arc on B.Silkscreen
+    @(70.7500 mm, 82.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(56.7500 mm, 58.0000 mm): Line on F.Silkscreen
+    @(70.4000 mm, 83.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(133.8490 mm, 170.6000 mm): Line on B.Silkscreen
+    @(73.4490 mm, 36.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(133.8500 mm, 173.5500 mm): Line on B.Silkscreen
+    @(73.4500 mm, 39.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(139.4500 mm, 176.4500 mm): Line on B.Silkscreen
+    @(83.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(142.6000 mm, 176.4500 mm): Line on B.Silkscreen
+    @(83.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(143.4500 mm, 172.4500 mm): Line on B.Silkscreen
+    @(83.0500 mm, 41.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(143.4500 mm, 172.4500 mm): Line on B.Silkscreen
+    @(83.0500 mm, 41.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(143.4500 mm, 175.4000 mm): Line on B.Silkscreen
+    @(74.1000 mm, 39.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(143.4500 mm, 175.6000 mm): Line on B.Silkscreen
+    @(73.7500 mm, 41.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(134.5000 mm, 173.5500 mm): Arc on B.Silkscreen
+    @(116.8490 mm, 130.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(134.1500 mm, 175.2000 mm): Line on F.Silkscreen
+    @(116.8500 mm, 133.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(20.9510 mm, 131.8000 mm): Line on B.Silkscreen
+    @(126.4500 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(20.9500 mm, 128.8500 mm): Line on B.Silkscreen
+    @(126.4500 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(11.3500 mm, 129.9500 mm): Line on B.Silkscreen
+    @(126.4500 mm, 135.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(11.3500 mm, 129.9500 mm): Line on B.Silkscreen
+    @(126.4500 mm, 135.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(11.3500 mm, 127.0000 mm): Line on B.Silkscreen
+    @(117.5000 mm, 133.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(11.3500 mm, 126.8000 mm): Line on B.Silkscreen
+    @(117.1500 mm, 134.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(20.3000 mm, 128.8500 mm): Arc on B.Silkscreen
+    @(53.0990 mm, 79.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(20.6500 mm, 127.2000 mm): Line on F.Silkscreen
+    @(53.1000 mm, 82.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.1990 mm, 70.4000 mm): Line on B.Silkscreen
+    @(62.7000 mm, 81.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.2000 mm, 73.3500 mm): Line on B.Silkscreen
+    @(62.7000 mm, 81.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(62.7000 mm, 84.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(62.7000 mm, 84.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.8000 mm, 75.2000 mm): Line on B.Silkscreen
+    @(53.7500 mm, 82.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.8000 mm, 75.4000 mm): Line on B.Silkscreen
+    @(53.4000 mm, 83.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.8500 mm, 73.3500 mm): Arc on B.Silkscreen
+    @(47.9490 mm, 19.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.5000 mm, 75.0000 mm): Line on F.Silkscreen
+    @(47.9500 mm, 22.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.1990 mm, 2.4000 mm): Line on B.Silkscreen
+    @(57.5500 mm, 21.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.2000 mm, 5.3500 mm): Line on B.Silkscreen
+    @(57.5500 mm, 21.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(57.5500 mm, 24.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(57.5500 mm, 24.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 7.2000 mm): Line on B.Silkscreen
+    @(48.6000 mm, 22.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.8000 mm, 7.4000 mm): Line on B.Silkscreen
+    @(48.2500 mm, 24.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.8500 mm, 5.3500 mm): Arc on B.Silkscreen
+    @(44.5990 mm, 130.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(86.5000 mm, 7.0000 mm): Line on F.Silkscreen
+    @(44.6000 mm, 133.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.1990 mm, 70.4000 mm): Line on B.Silkscreen
+    @(54.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.2000 mm, 73.3500 mm): Line on B.Silkscreen
+    @(54.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(54.2000 mm, 135.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 72.2500 mm): Line on B.Silkscreen
+    @(54.2000 mm, 135.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 75.2000 mm): Line on B.Silkscreen
+    @(45.2500 mm, 133.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 75.4000 mm): Line on B.Silkscreen
+    @(44.9000 mm, 134.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.8500 mm, 73.3500 mm): Arc on B.Silkscreen
+    @(137.4000 mm, 114.5800 mm): Reference 'LED201'
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.5000 mm, 75.0000 mm): Line on F.Silkscreen
+    @(27.5990 mm, 130.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(90.4490 mm, 53.4000 mm): Line on B.Silkscreen
+    @(27.6000 mm, 133.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(90.4500 mm, 56.3500 mm): Line on B.Silkscreen
+    @(33.2000 mm, 136.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(36.3500 mm, 136.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(37.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.0500 mm, 58.2000 mm): Line on B.Silkscreen
+    @(37.2000 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.0500 mm, 58.4000 mm): Line on B.Silkscreen
+    @(37.2000 mm, 135.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(91.1000 mm, 56.3500 mm): Arc on B.Silkscreen
+    @(37.2000 mm, 135.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(90.7500 mm, 58.0000 mm): Line on F.Silkscreen
+    @(28.2500 mm, 133.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(28.5510 mm, 31.6000 mm): Line on B.Silkscreen
+    @(27.9000 mm, 134.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(28.5500 mm, 28.6500 mm): Line on B.Silkscreen
+    @(39.4490 mm, 36.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.9500 mm, 29.7500 mm): Line on B.Silkscreen
+    @(39.4500 mm, 39.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.9500 mm, 29.7500 mm): Line on B.Silkscreen
+    @(49.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.9500 mm, 26.8000 mm): Line on B.Silkscreen
+    @(49.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(18.9500 mm, 26.6000 mm): Line on B.Silkscreen
+    @(49.0500 mm, 41.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.9000 mm, 28.6500 mm): Arc on B.Silkscreen
+    @(49.0500 mm, 41.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(28.2500 mm, 27.0000 mm): Line on F.Silkscreen
+    @(40.1000 mm, 39.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.1990 mm, 2.4000 mm): Line on B.Silkscreen
+    @(39.7500 mm, 41.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.2000 mm, 5.3500 mm): Line on B.Silkscreen
+    @(133.8490 mm, 130.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(133.8500 mm, 133.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(143.4500 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 7.2000 mm): Line on B.Silkscreen
+    @(143.4500 mm, 132.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(78.8000 mm, 7.4000 mm): Line on B.Silkscreen
+    @(143.4500 mm, 135.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.8500 mm, 5.3500 mm): Arc on B.Silkscreen
+    @(143.4500 mm, 135.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(69.5000 mm, 7.0000 mm): Line on F.Silkscreen
+    @(134.5000 mm, 133.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.0510 mm, 48.6000 mm): Line on B.Silkscreen
+    @(134.1500 mm, 134.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.0500 mm, 45.6500 mm): Line on B.Silkscreen
+    @(57.3490 mm, 96.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.4500 mm, 46.7500 mm): Line on B.Silkscreen
+    @(57.3500 mm, 99.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.4500 mm, 46.7500 mm): Line on B.Silkscreen
+    @(66.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.4500 mm, 43.8000 mm): Line on B.Silkscreen
+    @(66.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.4500 mm, 43.6000 mm): Line on B.Silkscreen
+    @(66.9500 mm, 101.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(36.4000 mm, 45.6500 mm): Arc on B.Silkscreen
+    @(66.9500 mm, 101.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(36.7500 mm, 44.0000 mm): Line on F.Silkscreen
+    @(58.0000 mm, 99.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(87.0990 mm, 119.6000 mm): Line on B.Silkscreen
+    @(57.6500 mm, 100.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(87.1000 mm, 122.5500 mm): Line on B.Silkscreen
+    @(81.9490 mm, 19.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(96.7000 mm, 121.4500 mm): Line on B.Silkscreen
+    @(81.9500 mm, 22.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(96.7000 mm, 121.4500 mm): Line on B.Silkscreen
+    @(91.5500 mm, 21.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(96.7000 mm, 124.4000 mm): Line on B.Silkscreen
+    @(91.5500 mm, 21.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(96.7000 mm, 124.6000 mm): Line on B.Silkscreen
+    @(91.5500 mm, 24.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(87.7500 mm, 122.5500 mm): Arc on B.Silkscreen
+    @(91.5500 mm, 24.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(87.4000 mm, 124.2000 mm): Line on F.Silkscreen
+    @(82.6000 mm, 22.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.5990 mm, 170.6000 mm): Line on B.Silkscreen
+    @(82.2500 mm, 24.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.6000 mm, 173.5500 mm): Line on B.Silkscreen
+    @(24.3010 mm, -2.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.2000 mm, 172.4500 mm): Line on B.Silkscreen
+    @(24.3000 mm, -5.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.2000 mm, 172.4500 mm): Line on B.Silkscreen
+    @(15.5500 mm, -8.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.2000 mm, 175.4000 mm): Line on B.Silkscreen
+    @(14.7000 mm, -4.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(37.2000 mm, 175.6000 mm): Line on B.Silkscreen
+    @(14.7000 mm, -4.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(28.2500 mm, 173.5500 mm): Arc on B.Silkscreen
+    @(14.7000 mm, -7.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(27.9000 mm, 175.2000 mm): Line on F.Silkscreen
+    @(14.7000 mm, -7.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(48.8490 mm, 153.6000 mm): Line on B.Silkscreen
+    @(23.6500 mm, -5.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(48.8500 mm, 156.5500 mm): Line on B.Silkscreen
+    @(24.0000 mm, -7.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(58.4500 mm, 155.4500 mm): Line on B.Silkscreen
+    @(86.1990 mm, 53.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(58.4500 mm, 155.4500 mm): Line on B.Silkscreen
+    @(86.2000 mm, 56.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(58.4500 mm, 158.4000 mm): Line on B.Silkscreen
+    @(95.8000 mm, 55.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(58.4500 mm, 158.6000 mm): Line on B.Silkscreen
+    @(95.8000 mm, 55.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(49.5000 mm, 156.5500 mm): Arc on B.Silkscreen
+    @(95.8000 mm, 58.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(49.1500 mm, 158.2000 mm): Line on F.Silkscreen
+    @(95.8000 mm, 58.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(35.1990 mm, 2.4000 mm): Line on B.Silkscreen
+    @(86.8500 mm, 56.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(35.2000 mm, 5.3500 mm): Line on B.Silkscreen
+    @(86.5000 mm, 58.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(44.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(23.3490 mm, 96.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(44.8000 mm, 4.2500 mm): Line on B.Silkscreen
+    @(23.3500 mm, 99.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(44.8000 mm, 7.2000 mm): Line on B.Silkscreen
+    @(32.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(44.8000 mm, 7.4000 mm): Line on B.Silkscreen
+    @(32.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(35.8500 mm, 5.3500 mm): Arc on B.Silkscreen
+    @(32.9500 mm, 101.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(35.5000 mm, 7.0000 mm): Line on F.Silkscreen
+    @(32.9500 mm, 101.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(47.9490 mm, 36.4000 mm): Line on B.Silkscreen
+    @(24.0000 mm, 99.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(47.9500 mm, 39.3500 mm): Line on B.Silkscreen
+    @(23.6500 mm, 100.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(57.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(99.8490 mm, 113.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(57.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(99.8500 mm, 116.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(57.5500 mm, 41.2000 mm): Line on B.Silkscreen
+    @(109.4500 mm, 115.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(57.5500 mm, 41.4000 mm): Line on B.Silkscreen
+    @(109.4500 mm, 115.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(48.6000 mm, 39.3500 mm): Arc on B.Silkscreen
+    @(109.4500 mm, 118.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(48.2500 mm, 41.0000 mm): Line on F.Silkscreen
+    @(109.4500 mm, 118.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(23.3490 mm, 136.6000 mm): Line on B.Silkscreen
+    @(100.5000 mm, 116.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(23.3500 mm, 139.5500 mm): Line on B.Silkscreen
+    @(100.1500 mm, 117.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(32.9500 mm, 138.4500 mm): Line on B.Silkscreen
+    @(40.3490 mm, 96.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(32.9500 mm, 138.4500 mm): Line on B.Silkscreen
+    @(40.3500 mm, 99.3000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(32.9500 mm, 141.4000 mm): Line on B.Silkscreen
+    @(49.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(32.9500 mm, 141.6000 mm): Line on B.Silkscreen
+    @(49.9500 mm, 98.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(24.0000 mm, 139.5500 mm): Arc on B.Silkscreen
+    @(49.9500 mm, 101.1500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(23.6500 mm, 141.2000 mm): Line on F.Silkscreen
+    @(49.9500 mm, 101.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(94.6990 mm, 19.4000 mm): Line on B.Silkscreen
+    @(41.0000 mm, 99.3000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(94.7000 mm, 22.3500 mm): Line on B.Silkscreen
+    @(40.6500 mm, 100.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(104.3000 mm, 21.2500 mm): Line on B.Silkscreen
+    @(-3.5000 mm, 5.6300 mm): Reference 'LED101'
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(104.3000 mm, 21.2500 mm): Line on B.Silkscreen
+    @(28.5510 mm, 14.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(104.3000 mm, 24.2000 mm): Line on B.Silkscreen
+    @(28.5500 mm, 11.6500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(104.3000 mm, 24.4000 mm): Line on B.Silkscreen
+    @(18.9500 mm, 12.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.3500 mm, 22.3500 mm): Arc on B.Silkscreen
+    @(18.9500 mm, 12.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(95.0000 mm, 24.0000 mm): Line on F.Silkscreen
+    @(18.9500 mm, 9.8000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(73.4490 mm, 53.4000 mm): Line on B.Silkscreen
+    @(18.9500 mm, 9.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(73.4500 mm, 56.3500 mm): Line on B.Silkscreen
+    @(27.9000 mm, 11.6500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(83.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(28.2500 mm, 10.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(83.0500 mm, 55.2500 mm): Line on B.Silkscreen
+    @(52.1990 mm, 53.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(83.0500 mm, 58.2000 mm): Line on B.Silkscreen
+    @(52.2000 mm, 56.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(83.0500 mm, 58.4000 mm): Line on B.Silkscreen
+    @(61.8000 mm, 55.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(74.1000 mm, 56.3500 mm): Arc on B.Silkscreen
+    @(61.8000 mm, 55.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(73.7500 mm, 58.0000 mm): Line on F.Silkscreen
+    @(61.8000 mm, 58.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(64.9490 mm, 36.4000 mm): Line on B.Silkscreen
+    @(61.8000 mm, 58.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(64.9500 mm, 39.3500 mm): Line on B.Silkscreen
+    @(52.8500 mm, 56.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(74.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(52.5000 mm, 58.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(74.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(8.2010 mm, 125.5500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(74.5500 mm, 41.2000 mm): Line on B.Silkscreen
+    @(8.2000 mm, 122.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(74.5500 mm, 41.4000 mm): Line on B.Silkscreen
+    @(-1.4000 mm, 123.7000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(65.6000 mm, 39.3500 mm): Arc on B.Silkscreen
+    @(-1.4000 mm, 123.7000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(65.2500 mm, 41.0000 mm): Line on F.Silkscreen
+    @(-1.4000 mm, 120.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(81.9490 mm, 36.4000 mm): Line on B.Silkscreen
+    @(-1.4000 mm, 120.5500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(81.9500 mm, 39.3500 mm): Line on B.Silkscreen
+    @(7.5500 mm, 122.6000 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(91.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(7.9000 mm, 120.9500 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(91.5500 mm, 38.2500 mm): Line on B.Silkscreen
+    @(15.8010 mm, 48.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(91.5500 mm, 41.2000 mm): Line on B.Silkscreen
+    @(15.8000 mm, 45.6500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(91.5500 mm, 41.4000 mm): Line on B.Silkscreen
+    @(6.2000 mm, 46.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(82.6000 mm, 39.3500 mm): Arc on B.Silkscreen
+    @(6.2000 mm, 46.7500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(82.2500 mm, 41.0000 mm): Line on F.Silkscreen
+    @(6.2000 mm, 43.8000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(99.8490 mm, 153.6000 mm): Line on B.Silkscreen
+    @(6.2000 mm, 43.6000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(99.8500 mm, 156.5500 mm): Line on B.Silkscreen
+    @(15.1500 mm, 45.6500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(109.4500 mm, 155.4500 mm): Line on B.Silkscreen
+    @(15.5000 mm, 44.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(109.4500 mm, 155.4500 mm): Line on B.Silkscreen
+    @(107.4490 mm, 36.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(109.4500 mm, 158.4000 mm): Line on B.Silkscreen
+    @(107.4500 mm, 39.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(109.4500 mm, 158.6000 mm): Line on B.Silkscreen
+    @(117.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.5000 mm, 156.5500 mm): Arc on B.Silkscreen
+    @(117.0500 mm, 38.2500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(100.1500 mm, 158.2000 mm): Line on F.Silkscreen
+    @(117.0500 mm, 41.2000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(60.6990 mm, 19.4000 mm): Line on B.Silkscreen
+    @(117.0500 mm, 41.4000 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(60.7000 mm, 22.3500 mm): Line on B.Silkscreen
+    @(108.1000 mm, 39.3500 mm): Arc on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(70.3000 mm, 21.2500 mm): Line on B.Silkscreen
+    @(107.7500 mm, 41.0000 mm): Line on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(70.3000 mm, 21.2500 mm): Line on B.Silkscreen
+    @(65.8490 mm, 113.3500 mm): Line on B.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; Severity: warning
-    @(70.3000 mm, 24.2000 mm): Line on B.Silkscreen
+    @(65.8500 mm, 116.3000 mm): Line on B.Silkscreen
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 167.0500 mm): Footprint MB28
+    @(149.6500 mm, 85.9500 mm): Footprint MB60
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 21.0000 mm): Footprint MB15
+    @(-7.6000 mm, 27.0000 mm): Footprint MB20
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 164.2000 mm): Footprint MB25
+    @(149.6500 mm, 88.8000 mm): Footprint MB63
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(91.5000 mm, -8.5000 mm): Footprint MB10
+    @(-7.6000 mm, 5.9000 mm): Footprint MB17
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 166.1000 mm): Footprint MB27
+    @(102.4000 mm, 136.4500 mm): Footprint MB52
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(23.5000 mm, -8.5000 mm): Footprint MB0
+    @(76.5000 mm, 59.5000 mm): Footprint MB35
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(25.4000 mm, -8.5000 mm): Footprint MB2
+    @(103.3500 mm, 136.4500 mm): Footprint MB53
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 165.1500 mm): Footprint MB26
+    @(149.6500 mm, 86.9000 mm): Footprint MB61
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(61.4000 mm, -8.5000 mm): Footprint MB7
+    @(16.3500 mm, -8.5000 mm): Footprint MB3
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 44.9500 mm): Footprint MB21
+    @(35.4000 mm, 68.4500 mm): Footprint MB32
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 168.0000 mm): Footprint MB29
+    @(51.4500 mm, -8.5000 mm): Footprint MB6
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(17.9000 mm, 168.2000 mm): Footprint HTBR
+    @(149.6500 mm, 117.9500 mm): Footprint MB65
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 114.1500 mm): Footprint MB31
+    @(101.4500 mm, 136.4500 mm): Footprint MB51
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 116.0500 mm): Footprint MB33
+    @(50.5000 mm, -8.5000 mm): Footprint MB5
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 24.8000 mm): Footprint MB19
+    @(-7.6000 mm, 29.8500 mm): Footprint MB23
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(62.3500 mm, -8.5000 mm): Footprint MB8
+    @(34.4500 mm, 68.4500 mm): Footprint MB31
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 152.2000 mm): Footprint MB35
+    @(-7.6000 mm, 4.9500 mm): Footprint MB16
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(24.4500 mm, -8.5000 mm): Footprint MB1
+    @(-7.6000 mm, 126.8000 mm): Footprint MB58
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 117.0000 mm): Footprint MB34
+    @(14.4500 mm, -8.5000 mm): Footprint MB1
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(59.5000 mm, -8.5000 mm): Footprint MB5
+    @(93.3500 mm, -8.5000 mm): Footprint MB13
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(92.4500 mm, -8.5000 mm): Footprint MB11
+    @(149.6500 mm, 121.7500 mm): Footprint MB69
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 46.8500 mm): Footprint MB23
+    @(-7.6000 mm, 124.9000 mm): Footprint MB56
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(94.3500 mm, -8.5000 mm): Footprint MB13
+    @(77.4500 mm, 59.5000 mm): Footprint MB36
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 115.1000 mm): Footprint MB32
+    @(-7.6000 mm, 4.0000 mm): Footprint MB15
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(27.3000 mm, -8.5000 mm): Footprint MB4
+    @(149.6500 mm, 119.8500 mm): Footprint MB67
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 23.8500 mm): Footprint MB18
+    @(24.5000 mm, 136.4500 mm): Footprint MB45
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(26.3500 mm, -8.5000 mm): Footprint MB3
+    @(-7.6000 mm, 27.9500 mm): Footprint MB21
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(137.4000 mm, 145.2000 mm): Footprint BT201
+    @(-7.6000 mm, 28.9000 mm): Footprint MB22
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 45.9000 mm): Footprint MB22
+    @(15.4000 mm, -8.5000 mm): Footprint MB2
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 154.1000 mm): Footprint MB37
+    @(94.3000 mm, -8.5000 mm): Footprint MB14
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 44.0000 mm): Footprint MB20
+    @(36.3500 mm, 59.5000 mm): Footprint MB28
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 155.0500 mm): Footprint MB38
+    @(53.3500 mm, -8.5000 mm): Footprint MB8
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 47.8000 mm): Footprint MB24
+    @(100.5000 mm, 136.4500 mm): Footprint MB50
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 22.9000 mm): Footprint MB17
+    @(-7.6000 mm, 6.8500 mm): Footprint MB18
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 156.0000 mm): Footprint MB39
+    @(-7.6000 mm, 123.9500 mm): Footprint MB55
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(1.0000 mm, 20.0000 mm): Footprint BT101
+    @(37.3000 mm, 68.4500 mm): Footprint MB34
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(60.4500 mm, -8.5000 mm): Footprint MB6
+    @(36.3500 mm, 68.4500 mm): Footprint MB33
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(95.3000 mm, -8.5000 mm): Footprint MB14
+    @(77.4500 mm, 68.4500 mm): Footprint MB41
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(93.4000 mm, -8.5000 mm): Footprint MB12
+    @(78.4000 mm, 59.5000 mm): Footprint MB37
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 153.1500 mm): Footprint MB36
+    @(-7.6000 mm, 7.8000 mm): Footprint MB19
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(63.3000 mm, -8.5000 mm): Footprint MB9
+    @(34.4500 mm, 59.5000 mm): Footprint MB26
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(149.6500 mm, 113.2000 mm): Footprint MB30
+    @(54.3000 mm, -8.5000 mm): Footprint MB9
 [lib_footprint_issues]: The current configuration does not include the library ''.
     Local override; Severity: warning
-    @(-7.6000 mm, 21.9500 mm): Footprint MB16
+    @(13.5000 mm, -8.5000 mm): Footprint MB0
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(76.5000 mm, 68.4500 mm): Footprint MB40
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(149.6500 mm, 89.7500 mm): Footprint MB64
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(33.5000 mm, 68.4500 mm): Footprint MB30
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(17.9000 mm, 127.9500 mm): Footprint HTBR
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(92.4000 mm, -8.5000 mm): Footprint MB12
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(80.3000 mm, 59.5000 mm): Footprint MB39
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(90.5000 mm, -8.5000 mm): Footprint MB10
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(-7.6000 mm, 125.8500 mm): Footprint MB57
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(28.3000 mm, 136.4500 mm): Footprint MB49
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(136.4000 mm, 107.4500 mm): Footprint BT201
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(91.4500 mm, -8.5000 mm): Footprint MB11
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(78.4000 mm, 68.4500 mm): Footprint MB42
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(37.3000 mm, 59.5000 mm): Footprint MB29
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(-7.6000 mm, 127.7500 mm): Footprint MB59
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(79.3500 mm, 59.5000 mm): Footprint MB38
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(27.3500 mm, 136.4500 mm): Footprint MB48
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(33.5000 mm, 59.5000 mm): Footprint MB25
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(52.4000 mm, -8.5000 mm): Footprint MB7
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(149.6500 mm, 118.9000 mm): Footprint MB66
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(104.3000 mm, 136.4500 mm): Footprint MB54
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(-7.6000 mm, 30.8000 mm): Footprint MB24
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(149.6500 mm, 120.8000 mm): Footprint MB68
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(25.4500 mm, 136.4500 mm): Footprint MB46
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(26.4000 mm, 136.4500 mm): Footprint MB47
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(35.4000 mm, 59.5000 mm): Footprint MB27
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(80.3000 mm, 68.4500 mm): Footprint MB44
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(17.3000 mm, -8.5000 mm): Footprint MB4
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(149.6500 mm, 87.8500 mm): Footprint MB62
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(79.3500 mm, 68.4500 mm): Footprint MB43
+[lib_footprint_issues]: The current configuration does not include the library ''.
+    Local override; Severity: warning
+    @(1.0000 mm, 3.0000 mm): Footprint BT101
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(149.6500 mm, 151.6000 mm): Line on Edge.Cuts
-    @(146.0800 mm, 137.7500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(146.0800 mm, 114.5000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(149.6500 mm, 151.6000 mm): Line on Edge.Cuts
-    @(149.5800 mm, 128.6500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(149.5800 mm, 105.4000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(149.6500 mm, 151.6000 mm): Line on Edge.Cuts
-    @(149.5800 mm, 133.4500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(149.5800 mm, 110.2000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(149.6500 mm, 151.6000 mm): Line on Edge.Cuts
-    @(149.5800 mm, 134.9500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(149.5800 mm, 111.7000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(149.6500 mm, 151.6000 mm): Line on Edge.Cuts
-    @(149.5800 mm, 137.7500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(149.5800 mm, 114.5000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(151.6500 mm, 117.6000 mm): Line on Edge.Cuts
-    @(151.5800 mm, 133.4500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(151.5800 mm, 110.2000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(151.6500 mm, 117.6000 mm): Line on Edge.Cuts
-    @(151.5800 mm, 134.9500 mm): Line on B.Silkscreen
+    @(149.6500 mm, 117.3500 mm): Line on Edge.Cuts
+    @(151.5800 mm, 111.7000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(151.6500 mm, 117.6000 mm): Line on Edge.Cuts
-    @(151.5800 mm, 134.9500 mm): Line on B.Silkscreen
+    @(151.6500 mm, 90.3500 mm): Line on Edge.Cuts
+    @(151.5800 mm, 111.7000 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-7.6000 mm, 8.5000 mm): Line on Edge.Cuts
-    @(-4.0300 mm, 10.9500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-4.0300 mm, -6.0500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-7.6000 mm, 8.5000 mm): Line on Edge.Cuts
-    @(-7.5300 mm, 20.0500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-7.5300 mm, 3.0500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-7.6000 mm, 8.5000 mm): Line on Edge.Cuts
-    @(-7.5300 mm, 15.2500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-7.5300 mm, -1.7500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-7.6000 mm, 8.5000 mm): Line on Edge.Cuts
-    @(-7.5300 mm, 13.7500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-7.5300 mm, -3.2500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-7.6000 mm, 8.5000 mm): Line on Edge.Cuts
-    @(-7.5300 mm, 10.9500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-7.5300 mm, -6.0500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-9.6000 mm, 20.4000 mm): Line on Edge.Cuts
-    @(-9.5300 mm, 15.2500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-9.5300 mm, -1.7500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-9.6000 mm, 20.4000 mm): Line on Edge.Cuts
-    @(-9.5300 mm, 13.7500 mm): Line on B.Silkscreen
+    @(-7.6000 mm, -8.5000 mm): Line on Edge.Cuts
+    @(-9.5300 mm, -3.2500 mm): Line on B.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; Severity: warning
-    @(-9.6000 mm, 20.4000 mm): Line on Edge.Cuts
-    @(-9.5300 mm, 13.7500 mm): Line on B.Silkscreen
+    @(-9.6000 mm, 3.4000 mm): Line on Edge.Cuts
+    @(-9.5300 mm, -3.2500 mm): Line on B.Silkscreen
 
 ** Found 0 unconnected pads **
 

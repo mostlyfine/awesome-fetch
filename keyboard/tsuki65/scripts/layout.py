@@ -1,6 +1,6 @@
 """Shared geometry for tsuki65 (all units: mm, KiCad coords: x right, y down).
 
-Row-staggered (ANSI-like) 65 % split keyboard.  Both halves are defined in
+Row-staggered (ANSI-like) split keyboard, 4 rows (no number row).  Both halves are defined in
 one common "visual" coordinate system (x = key units * 17 mm, as if the two
 halves were one keyboard), so
 
@@ -20,37 +20,37 @@ from shapely.ops import unary_union
 P = 17.0                      # key pitch (x and y)
 
 # ---- key layout (all 1U).  (x of the key's left edge in U, label) ------------
-ROW_OFF = [0.0, 0.5, 0.75, 1.25]
+# No number row: 4 rows (numbers / Esc / F-keys live on layers).
+ROW_OFF = [0.5, 0.75, 1.25]
+NROWS = 4
 LEFT_ROWS = [
-    ["Esc", "1", "2", "3", "4", "5", "6"],
     ["Tab", "Q", "W", "E", "R", "T"],
     ["Ctrl", "A", "S", "D", "F", "G"],
     ["Shift", "Z", "X", "C", "V", "B"],
 ]
 LEFT_R4 = [(0, "Fn"), (1, "Gui"), (2, "Alt"), (3, "Lower"), (4, "BS"), (5, "Spc")]
 RIGHT_ROWS = [
-    (7.0, ["7", "8", "9", "0", "-", "=", "BS"]),
     (6.5, ["Y", "U", "I", "O", "P", "[", "]"]),
     (6.75, ["H", "J", "K", "L", ";", "'", "Ent"]),
     (7.25, ["N", "M", ",", ".", "/", "Shift", "Up"]),
 ]
 RIGHT_R4 = [(6.0, "Spc"), (8.0, "Raise"), (9.0, "Alt"), (10.0, "Ctrl"),
             (12.25, "Left"), (13.25, "Down"), (14.25, "Right")]
-TB_SLOT = (4, 7.0)            # right half, bottom row next to Space: 14 mm trackball
+TB_SLOT = (3, 7.0)            # right half, bottom row next to Space: 14 mm trackball
 
 # ---- controller blocks (outer side).  BMP footprint origin = pin-1 row centre.
 # BMP Boost board ~18 x 33 mm, USB at the pin-1 end (top).
 CTRL = {
-    "L": dict(bmp=(3.5, 27.6),          # rows 2-3, left of Ctrl/Shift
-              edge_x=-7.6, sw=(-7.6 + 5.2, 15.5), sw_rot=180,
-              bat=(1.0, 20.0), led=(-3.5, 21.2), res=(-3.5, 23.0),
-              wire_hole=(2.3, 13.0),
-              extra=[(-7.6, 8.5, 21.25, 59.5)]),
-    "R": dict(bmp=(248.0, -6.18),       # rows 0-1, right of BS / ]
+    "L": dict(bmp=(3.5, 10.6),          # rows 1-2, left of Ctrl/Shift; USB -> top edge
+              edge_x=-7.6, sw=(-7.6 + 5.2, -1.5), sw_rot=180,
+              bat=(1.0, 3.0), led=(-3.5, 4.2), res=(-3.5, 6.0),
+              wire_hole=(2.3, -4.0),
+              extra=[(-7.6, -8.5, 21.25, 42.5)]),
+    "R": dict(bmp=(248.0, -6.18),       # rows 0-1, right of ] / Enter; USB -> top edge
               edge_x=259.25, sw=(259.25 - 5.2, 33.0), sw_rot=0,
-              bat=(247.0, 45.0), led=(246.0, 52.0), res=(246.0, 53.8),
-              wire_hole=(252.0, 50.0),
-              extra=[(229.5, -8.5, 259.25, 59.5)]),
+              bat=(246.0, 30.5), led=(247.0, 36.2), res=(247.0, 38.0),
+              wire_hole=(250.5, 40.0),
+              extra=[(229.5, -8.5, 259.25, 42.5)]),
 }
 BMP_BOX = (-9.45, -1.82, 9.45, 31.81)  # BMP footprint courtyard (relative)
 
@@ -72,7 +72,7 @@ def keys(side="L"):
             for i, lab in enumerate(row):
                 out.append(dict(r=r, c=i, xv=ROW_OFF[r] + i + 0.5, label=lab))
         for i, (xl, lab) in enumerate(LEFT_R4):
-            out.append(dict(r=4, c=i, xv=xl + 0.5, label=lab))
+            out.append(dict(r=NROWS - 1, c=i, xv=xl + 0.5, label=lab))
     else:
         for r, (x0, row) in enumerate(RIGHT_ROWS):
             n = len(row)
@@ -80,7 +80,7 @@ def keys(side="L"):
                 out.append(dict(r=r, c=n - 1 - i, xv=x0 + i + 0.5, label=lab))
         n = len(RIGHT_R4)
         for i, (xl, lab) in enumerate(RIGHT_R4):
-            out.append(dict(r=4, c=n - 1 - i, xv=xl + 0.5, label=lab))
+            out.append(dict(r=NROWS - 1, c=n - 1 - i, xv=xl + 0.5, label=lab))
         out.append(dict(r=TB_SLOT[0], c=None, xv=TB_SLOT[1] + 0.5, label="TB"))
     for k in out:
         k["tb"] = k["c"] is None
@@ -90,7 +90,7 @@ def keys(side="L"):
     # Rotate the socket of the left-most key of every row by 180 deg so that its
     # pad 1 points into the board: on the right half this keeps the mating
     # edge clean, on the left half it keeps the outer edge / BMP area clear.
-    for r in range(5):
+    for r in range(NROWS):
         row = [k for k in out if k["r"] == r and not k["tb"]]
         min(row, key=lambda k: k["x"])["rot"] = 180
     return out
@@ -116,12 +116,12 @@ def mating_zone(side):
     half may extend into it."""
     ks = keys(side)
     zs = []
-    for r in range(5):
+    for r in range(NROWS):
         row = [k for k in ks if k["r"] == r]
         y0, y1 = r * P - P / 2, r * P + P / 2
         if r == 0:
             y0 -= 40
-        if r == 4:
+        if r == NROWS - 1:
             y1 += 40
         if side == "L":
             xe = max(k["x"] for k in row) + P / 2
@@ -164,7 +164,7 @@ def _keepout(side):
 
 def _body(side):
     cells = [cell(k) for k in keys(side)]
-    row4 = unary_union([cell(k) for k in keys(side) if k["r"] == 4]).envelope
+    row4 = unary_union([cell(k) for k in keys(side) if k["r"] == NROWS - 1]).envelope
     extra = [rect(*e) for e in CTRL[side]["extra"]]
     return unary_union(cells + [row4] + extra)
 

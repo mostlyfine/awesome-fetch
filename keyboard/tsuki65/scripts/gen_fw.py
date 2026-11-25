@@ -14,34 +14,39 @@ SPLIT_GAP = 0.0  # visual gap (U) between the halves in the physical layout
 # visual order: per row, left keys then right keys, each left-to-right
 def ordered():
     out = []
-    for r in range(5):
+    for r in range(L.NROWS):
         for side in ("L", "R"):
             row = [k for k in L.keys(side) if k["r"] == r and not k["tb"]]
             out += [(side, k) for k in sorted(row, key=lambda k: k["xv"])]
     return out
 
 
-# default keymap, same order as ordered()  (row lengths 14/13/13/13/13)
+# default keymap, same order as ordered()  (4 rows x 13 keys)
 BASE = """
-&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4    &kp N5    &kp N6     &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL &kp BSPC
 &kp TAB   &kp Q    &kp W    &kp E    &kp R     &kp T     &kp Y      &kp U     &kp I     &kp O     &kp P     &kp LBKT  &kp RBKT
 &kp LCTRL &kp A    &kp S    &kp D    &kp F     &kp G     &kp H      &kp J     &kp K     &kp L     &kp SEMI  &kp SQT   &kp RET
 &kp LSHFT &kp Z    &kp X    &kp C    &kp V     &kp B     &kp N      &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT &kp UP
-&mo 2     &kp LGUI &kp LALT &mo 1    &kp BSPC  &kp SPACE &kp SPACE  &mo 1     &kp RALT  &kp RCTRL &kp LEFT  &kp DOWN  &kp RIGHT
+&mo 2     &kp LGUI &kp LALT &mo 1    &kp BSPC  &kp SPACE &kp SPACE  &mo 3     &kp RALT  &kp RCTRL &kp LEFT  &kp DOWN  &kp RIGHT
 """
+# Lower: numbers / symbols / arrows / mouse buttons
 LOWER = """
-&kp GRAVE &kp F1   &kp F2   &kp F3   &kp F4    &kp F5    &kp F6     &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12   &kp DEL
-&trans    &trans   &trans   &trans   &trans    &trans    &kp HOME   &kp PG_DN &kp PG_UP &kp END   &kp PSCRN &trans    &kp BSLH
-&kp CAPS  &trans   &trans   &trans   &trans    &trans    &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT &trans    &trans    &trans
-&trans    &trans   &trans   &trans   &trans    &trans    &mkp LCLK  &mkp RCLK &mkp MCLK &trans    &trans    &trans    &kp PG_UP
+&kp ESC   &kp N1   &kp N2   &kp N3   &kp N4    &kp N5    &kp N6     &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL
+&kp GRAVE &trans   &trans   &trans   &trans    &trans    &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT &trans    &kp BSLH  &kp DEL
+&kp CAPS  &trans   &trans   &trans   &trans    &trans    &mkp LCLK  &mkp RCLK &mkp MCLK &trans    &trans    &trans    &kp PG_UP
 &trans    &trans   &trans   &trans   &kp DEL   &trans    &trans     &trans    &trans    &trans    &kp HOME  &kp PG_DN &kp END
 """
 SYSTEM = """
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans &trans &trans &trans &trans &trans &trans &bootloader
+&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans &trans &trans &trans &trans &trans &bootloader
 &trans &out OUT_USB &out OUT_BLE &trans &trans &trans &trans &trans &trans &trans &trans &trans &sys_reset
 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+"""
+# Raise: function keys / navigation
+RAISE = """
+&kp F1    &kp F2   &kp F3   &kp F4   &kp F5    &kp F6    &kp F7     &kp F8    &kp F9    &kp F10   &kp F11   &kp F12   &kp PSCRN
+&trans    &trans   &trans   &trans   &trans    &trans    &kp HOME   &kp PG_DN &kp PG_UP &kp END   &trans    &trans    &trans
+&trans    &trans   &trans   &trans   &trans    &trans    &trans     &trans    &trans    &trans    &trans    &trans    &trans
+&trans    &trans   &trans   &trans   &trans    &trans    &trans     &trans    &trans    &trans    &trans    &trans    &trans
 """
 
 
@@ -86,7 +91,7 @@ def main():
     default_transform: keymap_transform_0 {{
         compatible = "zmk,matrix-transform";
         columns = <14>;
-        rows = <5>;
+        rows = <{len(rows)}>;
         map = <
 {transform}
         >;
@@ -119,9 +124,8 @@ def main():
             = <&gpio0 5 (GPIO_ACTIVE_HIGH)>,
             <&gpio0 0  (GPIO_ACTIVE_HIGH)>,
             <&gpio0 30 (GPIO_ACTIVE_HIGH)>,
-            <&gpio0 3  (GPIO_ACTIVE_HIGH)>,
-            <&gpio1 14 (GPIO_ACTIVE_HIGH)>
-            ;
+            <&gpio0 3  (GPIO_ACTIVE_HIGH)>
+            ;   /* ROW4 (gpio1 14, BMP pin 17) unused: 4 rows */
         wakeup-source;
     }};
 
@@ -215,6 +219,12 @@ def main():
         system {{
             bindings = <
 {fmt(SYSTEM)}
+            >;
+        }};
+
+        raise {{
+            bindings = <
+{fmt(RAISE)}
             >;
         }};
     }};

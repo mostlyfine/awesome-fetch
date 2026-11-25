@@ -48,10 +48,10 @@ def layout_png():
         sx, sy = L.CTRL[side]["sw"]
         ax.plot([sx], [sy], "s", color="#c60", ms=6)
     ax.set_xlim(-20, 268)
-    ax.set_ylim(92, -20)
+    ax.set_ylim(75, -20)
     ax.set_aspect("equal")
     ax.axis("off")
-    ax.set_title("tsuki65 — row-staggered 65% split (halves joined), 17 mm pitch, Choc V2, 14 mm trackball\n"
+    ax.set_title("tsuki65 — row-staggered 4-row split (halves joined), 17 mm pitch, Choc V2, 14 mm trackball\n"
                  "black = left half, purple = right half, orange = power switch, AA battery under the bottom plate")
     fig.savefig(os.path.join(IMG, "layout.png"), dpi=110, bbox_inches="tight")
 
