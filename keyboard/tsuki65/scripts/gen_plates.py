@@ -27,37 +27,30 @@ def cutouts(side):
 
 
 def build(kind):
-    mx = L.mirror_x()
     fn = L.top_outline if kind == "top" else L.bottom_outline
     thick = 1.2 if kind == "top" else 1.6
     left = fn("L")
-    right_local = fn("R")
+    right0 = fn("R")
     if kind == "top":
         left = left.difference(cutouts("L"))
-        right_local = right_local.difference(cutouts("R"))
-    rm = affinity.scale(right_local, xfact=-1, yfact=1, origin=(mx / 2, 0))
-    # use the same vertical offset as the main PCB so all three panels line up
+        right0 = right0.difference(cutouts("R"))
+    # same placement as the main PCB so all three panels line up
     import gen_main
-    _, _, dy, _ = gen_main.outlines()
-    right = affinity.translate(rm, 0, dy)
-    # plates may be wider (bottom plate battery lip): make sure they don't touch
-    if right.distance(left) < panel.GAP:
-        dy2 = panel.place_right(left, rm)
-        right = affinity.translate(rm, 0, dy2)
-        dy = dy2
+    _, _, dx, dy = gen_main.outlines()
+    right = affinity.translate(right0, dx, dy)
     board = new_board(thick)
     # tabs only on the outer outline (ignore cutouts)
     lo = type(left)(left.exterior)
     ro = type(right)(right.exterior)
     pnl, holes, tabs = panel.build(lo, ro)
-    # put the inner cut-outs back
     inner = unary_union([type(left)(r) for r in left.interiors] +
                         [type(right)(r) for r in right.interiors])
     pnl = panel.clean(pnl.difference(inner))
     draw_polygon_edges(board, pnl)
     for i, p in enumerate(holes):
         npth(board, f"MB{i}", p.x, p.y, panel.HOLE_D)
-    for side, T in (("L", lambda x, y: (x, y)), ("R", lambda x, y: (mx - x, y + dy))):
+    xf = {"L": lambda x, y: (x, y), "R": lambda x, y: (x + dx, y + dy)}
+    for side, T in xf.items():
         for i, h in enumerate(L.holes(side)):
             X, Y = T(*h)
             npth(board, f"H{side}{i}", X, Y, L.PLATE_HOLE)
@@ -65,12 +58,12 @@ def build(kind):
         "tsuki65 bottom plate (FR4 1.6 mm, no copper)"
     text(board, title, pnl.bounds[0] + 30, pnl.bounds[1] + 2.5, 1.5, pcbnew.F_SilkS)
     if kind == "bottom":
-        # silk hints on the bottom plate
-        for side, T in (("L", lambda x, y: (x, y)), ("R", lambda x, y: (mx - x, y + dy))):
-            X, Y = T(*L.O(-19, 20))
-            text(board, "battery under here (AA)", X, Y, 1.2, pcbnew.B_SilkS, 90, True)
-            X, Y = T(60, 40)
+        for side, T in xf.items():
+            X, Y = T(*L.CTRL[side]["wire_hole"])
+            text(board, "battery wires", X, Y + 3.2, 1.0, pcbnew.B_SilkS, 0, True)
+            X, Y = T(60 if side == "L" else 190, 40)
             text(board, "tsuki65 " + ("LEFT" if side == "L" else "RIGHT"), X, Y, 3, pcbnew.B_SilkS, 0, True)
+            text(board, "AA battery holder (lead wires) here", X, Y + 6, 1.5, pcbnew.B_SilkS, 0, True)
     out = os.path.join(OUT, f"tsuki65-{kind}-plate.kicad_pcb")
     board.Save(out)
     print("saved", out, [round(v, 1) for v in pnl.bounds], "tabs", len(tabs))

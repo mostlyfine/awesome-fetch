@@ -8,7 +8,7 @@ from shapely import affinity
 sys.path.insert(0, os.path.dirname(__file__))
 import layout as L  # noqa: E402
 import panel  # noqa: E402
-from kutil import Nets, new_board, place, set_pad_nets, draw_polygon_edges, npth, text, mm  # noqa: E402
+from kutil import Nets, new_board, place, set_pad_nets, draw_polygon_edges, npth, text, thpads  # noqa: E402
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "pcb")
 
@@ -33,95 +33,77 @@ LCSC = {
 }
 
 
-def make_xform(side, dy, mx):
+def make_xform(side, dx, dy):
     if side == "L":
         return lambda x, y: (x, y)
-    return lambda x, y: (mx - x, y + dy)
+    return lambda x, y: (x + dx, y + dy)
+
+
+def lcsc(fp, name):
+    fp.SetValue(LCSC[name][0])
+    fp.SetProperty("LCSC", LCSC[name][1])
 
 
 def build_half(board, nets, side, T):
     n = lambda s: f"{side}_{s}"  # noqa: E731
     ref0 = 100 if side == "L" else 200
 
-    def put(name, ref, x, y, rot=0, back=False, pads=None, value=None):
-        X, Y = T(x, y)
-        fp = place(board, name, ref, X, Y, rot, back, value)
-        if name in LCSC:
-            fp.SetValue(LCSC[name][0])
-            fp.SetProperty("LCSC", LCSC[name][1])
-        if pads:
-            set_pad_nets(fp, nets, {k: (n(v) if v else None) for k, v in pads.items()})
-        return fp
-
     # ---- keys -------------------------------------------------------------
     ks = [k for k in L.keys(side) if not k["tb"]]
     for i, k in enumerate(sorted(ks, key=lambda k: (k["r"], k["xv"]))):
         idx = ref0 + i + 1
         dk = f"D{idx}_K"
-        put("CHOC_V2_SOCKET_HANDSOLDERING", f"SW{idx}", k["x"], k["y"], 0, True,
-            {"1": f"COL{k['c']}", "2": dk})
-        # diode NE of the switch centre (same relative place as torabo-tsuki LP);
-        # x offset is not mirrored because the socket footprint is not mirrored.
         X, Y = T(k["x"], k["y"])
-        d = place(board, "D_SOD-123", f"D{idx}", X + 3.6, Y - 3.2, 90, True)
-        d.SetValue(LCSC["D_SOD-123"][0])
-        d.SetProperty("LCSC", LCSC["D_SOD-123"][1])
+        sw = place(board, "CHOC_V2_SOCKET_HANDSOLDERING", f"SW{idx}", X, Y, k["rot"], True)
+        lcsc(sw, "CHOC_V2_SOCKET_HANDSOLDERING")
+        set_pad_nets(sw, nets, {"1": n(f"COL{k['c']}"), "2": n(dk)})
+        # diode NE of the switch centre (torabo-tsuki LP); SW when the socket is rotated
+        if k["rot"] == 0:
+            d = place(board, "D_SOD-123", f"D{idx}", X + 3.6, Y - 3.2, 90, True)
+        else:
+            d = place(board, "D_SOD-123", f"D{idx}", X - 3.6, Y + 3.2, 270, True)
+        lcsc(d, "D_SOD-123")
         set_pad_nets(d, nets, {"1": n(dk), "2": n(f"ROW{k['r']}")})
     for k in L.keys(side):
         if not k["tb"]:
             continue
         # 14 mm trackball slot (maghold case in a 14 x 14 plate hole): no switch,
-        # only a 4.8 mm hole for the FFC and the FPC connector next to it.
+        # a 4.8 mm hole for the FFC and the FPC connector (contacts facing east).
         X, Y = T(k["x"], k["y"])
         npth(board, f"HTB{side}", X, Y, 4.8)
-        j = place(board, "GT-F0501SR10-06S1101", f"J{ref0 + 1}", X - 4.3, Y - 5.8, 270, True)
-        j.SetValue(LCSC["GT-F0501SR10-06S1101"][0])
-        j.SetProperty("LCSC", LCSC["GT-F0501SR10-06S1101"][1])
+        j = place(board, "GT-F0501SR10-06S1101", f"J{ref0 + 1}", X + 4.3, Y - 5.8, 90, True)
+        lcsc(j, "GT-F0501SR10-06S1101")
         set_pad_nets(j, nets, {"1": n("GND"), "2": n("SCLK"), "3": n("SDIO"), "4": n("MOTION"),
                                "5": n("CS"), "6": n("VCC"), "MP": n("GND")})
 
-    # ---- controller block (torabo-tsuki LP geometry) ------------------------
-    sgn = 1 if side == "L" else -1
-    bx, by = L.O(-19, 0.4)
-    X, Y = T(bx, by)
+    # ---- controller block on the outer side ------------------------------------
+    c = L.CTRL[side]
+    X, Y = T(*c["bmp"])
     u = place(board, "BLEMicroPro", f"U{ref0 + 1}", X, Y, 0, False)
     u.SetValue("BMP Boost")
     set_pad_nets(u, nets, {k: (n(v) if v else None) for k, v in BMP_PINS.items()})
 
-    sx, sy = L.O(-19, 3.5)
-    X, Y = T(sx, sy)
-    s = place(board, "SW-SMD_K3-1280S-F1", f"SW{ref0}", X, Y, 90, True)
-    s.SetValue(LCSC["SW-SMD_K3-1280S-F1"][0])
-    s.SetProperty("LCSC", LCSC["SW-SMD_K3-1280S-F1"][1])
-    if side == "L":
-        set_pad_nets(s, nets, {"1": n("BATN"), "2": n("GND"), "3": n("BOOT")})
-    else:
-        set_pad_nets(s, nets, {"1": n("BOOT"), "2": n("GND"), "3": n("BATN")})
+    X, Y = T(*c["sw"])
+    s = place(board, "SW-SMD_K3-1280S-F1", f"SW{ref0}", X, Y, c["sw_rot"], True)
+    lcsc(s, "SW-SMD_K3-1280S-F1")
+    set_pad_nets(s, nets, {"1": n("BATN"), "2": n("GND"), "3": n("BOOT")})
 
-    X, Y = T(*L.O(0, 30.5))
-    bt = place(board, "battery_holder", f"BT{ref0 + 1}", X, Y, -90, True)
-    bt.SetValue("AA battery holder")
+    # battery: lead-wire AA holder under the bottom plate -> two solder pads
+    X, Y = T(*c["bat"])
+    bt = thpads(board, f"BT{ref0 + 1}", X, Y, [("1", -1.27), ("2", 1.27)])
     set_pad_nets(bt, nets, {"1": n("BATT"), "2": n("BATN")})
+    text(board, "+", X - 1.27, Y - 2.0, 1.0, pcbnew.B_SilkS, 0, True)
+    text(board, "-", X + 1.27, Y - 2.0, 1.0, pcbnew.B_SilkS, 0, True)
+    text(board, "+", X - 1.27, Y - 2.0, 1.0, pcbnew.F_SilkS)
+    text(board, "-", X + 1.27, Y - 2.0, 1.0, pcbnew.F_SilkS)
 
-    # relief holes at the battery notch corners (as torabo-tsuki LP)
-    for dy_ in (2.0, 59.3):
-        X, Y = T(*L.O(-8.5, dy_))
-        npth(board, f"H{side}{dy_}", X, Y, 1.0)
-
-    # cover screw hole (M2)
-    X, Y = T(*L.O(-19, 36.3))
-    place(board, "MountingHole_2.2mm_M2", f"H{ref0 + 50}", X, Y)
-
-    # status LED + resistor (bottom side, near the lower edge of the cover)
-    X, Y = T(*L.O(-12.0, 64.0))
+    X, Y = T(*c["led"])
     led = place(board, "LED_0603_1608Metric", f"LED{ref0 + 1}", X, Y, 0, True)
-    led.SetValue(LCSC["LED_0603_1608Metric"][0])
-    led.SetProperty("LCSC", LCSC["LED_0603_1608Metric"][1])
+    lcsc(led, "LED_0603_1608Metric")
     set_pad_nets(led, nets, {"1": n("LEDK"), "2": n("LED")})
-    X, Y = T(*L.O(-12.0, 61.8))
+    X, Y = T(*c["res"])
     r = place(board, "R_0402_1005Metric", f"R{ref0 + 1}", X, Y, 0, True)
-    r.SetValue(LCSC["R_0402_1005Metric"][0])
-    r.SetProperty("LCSC", LCSC["R_0402_1005Metric"][1])
+    lcsc(r, "R_0402_1005Metric")
     set_pad_nets(r, nets, {"1": n("LEDK"), "2": n("GND")})
 
     # spacer holes
@@ -129,31 +111,28 @@ def build_half(board, nets, side, T):
         X, Y = T(*h)
         place(board, "MountingHole_5mm", f"H{ref0 + 60 + i}", X, Y)
 
-    # labels
-    X, Y = T(*L.O(-19, 50))
-    text(board, "tsuki65 " + ("LEFT" if side == "L" else "RIGHT"), X, Y, 1.2,
-         pcbnew.B_SilkS, 0, True)
-    X, Y = T(*L.O(-19, 46))
-    text(board, "row stagger / 17mm / Choc V2" + (" / 14mm TB" if side == "R" else ""), X, Y, 1.0, pcbnew.B_SilkS, 0, True)
-    return sgn
+    # label (bottom silk, between the BMP pin rows)
+    bx, by = c["bmp"]
+    X, Y = T(bx, by + 16)
+    text(board, "tsuki65 " + ("LEFT" if side == "L" else "RIGHT"), X, Y, 1.2, pcbnew.B_SilkS, 90, True)
 
 
 def outlines():
-    """Return (left, right, dy, mx) for the main PCB."""
+    """Return (left, right, dx, dy) for the main PCB (right half in panel coords)."""
     left = L.main_outline("L")
-    mx = L.mirror_x()
-    rm = affinity.scale(L.main_outline("R"), xfact=-1, yfact=1, origin=(mx / 2, 0))
-    dy = panel.place_right(left, rm)
-    right = affinity.translate(rm, 0, dy)
-    return left, right, dy, mx
+    right0 = L.main_outline("R")
+    dx = left.bounds[0] - right0.bounds[0]
+    rs = affinity.translate(right0, dx, 0)
+    dy = panel.place_right(left, rs)
+    return left, affinity.translate(rs, 0, dy), dx, dy
 
 
 def main():
     board = new_board(1.6)
     nets = Nets(board)
-    left, right, dy, mx = outlines()
-    build_half(board, nets, "L", make_xform("L", dy, mx))
-    build_half(board, nets, "R", make_xform("R", dy, mx))
+    left, right, dx, dy = outlines()
+    build_half(board, nets, "L", make_xform("L", dx, dy))
+    build_half(board, nets, "R", make_xform("R", dx, dy))
     pnl, holes, tabs = panel.build(left, right)
     draw_polygon_edges(board, pnl)
     for i, p in enumerate(holes):

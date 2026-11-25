@@ -121,3 +121,27 @@ def text(board, s, x, y, size=1.5, layer=None, rot=0, mirror=False):
     t.SetMirrored(mirror)
     board.Add(t)
     return t
+
+
+def thpads(board, ref, x, y, pads, drill=1.0, size=1.8):
+    """Simple footprint with plated through-hole solder pads [(number, dx)]."""
+    fp = pcbnew.FOOTPRINT(board)
+    fp.SetReference(ref)
+    fp.Reference().SetVisible(False)
+    fp.Value().SetVisible(False)
+    fp.SetValue("battery leads")
+    fp.SetAttributes(pcbnew.FP_THROUGH_HOLE | pcbnew.FP_EXCLUDE_FROM_POS_FILES | pcbnew.FP_EXCLUDE_FROM_BOM)
+    for num, dx in pads:
+        pad = pcbnew.PAD(fp)
+        pad.SetAttribute(pcbnew.PAD_ATTRIB_PTH)
+        pad.SetShape(pcbnew.PAD_SHAPE_RECT if num == "1" else pcbnew.PAD_SHAPE_CIRCLE)
+        pad.SetSize(pcbnew.VECTOR2I(mm(size), mm(size)))
+        pad.SetDrillSize(pcbnew.VECTOR2I(mm(drill), mm(drill)))
+        pad.SetLayerSet(pad.PTHMask())
+        pad.SetNumber(num)
+        pad.SetPos0(V(dx, 0))
+        pad.SetPosition(V(x + dx, y))
+        fp.Add(pad)
+    fp.SetPosition(V(x, y))
+    board.Add(fp)
+    return fp

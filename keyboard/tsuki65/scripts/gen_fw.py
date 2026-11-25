@@ -8,7 +8,7 @@ import layout as L  # noqa: E402
 
 FW = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "firmware", "boards", "shields", "tsuki65")
 
-SPLIT_GAP = 2.0  # visual gap (U) between the halves in the physical layout
+SPLIT_GAP = 0.0  # visual gap (U) between the halves in the physical layout
 
 
 # visual order: per row, left keys then right keys, each left-to-right
@@ -21,27 +21,27 @@ def ordered():
     return out
 
 
-# default keymap, same order as ordered()  (row lengths 14/13/13/13/12)
+# default keymap, same order as ordered()  (row lengths 14/13/13/13/13)
 BASE = """
 &kp ESC   &kp N1   &kp N2   &kp N3   &kp N4    &kp N5    &kp N6     &kp N7    &kp N8    &kp N9    &kp N0    &kp MINUS &kp EQUAL &kp BSPC
 &kp TAB   &kp Q    &kp W    &kp E    &kp R     &kp T     &kp Y      &kp U     &kp I     &kp O     &kp P     &kp LBKT  &kp RBKT
 &kp LCTRL &kp A    &kp S    &kp D    &kp F     &kp G     &kp H      &kp J     &kp K     &kp L     &kp SEMI  &kp SQT   &kp RET
 &kp LSHFT &kp Z    &kp X    &kp C    &kp V     &kp B     &kp N      &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp RSHFT &kp UP
-&mo 2     &kp LGUI &kp LALT &mo 1    &kp BSPC  &kp SPACE &kp SPACE  &mo 1     &kp RALT  &kp LEFT  &kp DOWN  &kp RIGHT
+&mo 2     &kp LGUI &kp LALT &mo 1    &kp BSPC  &kp SPACE &kp SPACE  &mo 1     &kp RALT  &kp RCTRL &kp LEFT  &kp DOWN  &kp RIGHT
 """
 LOWER = """
 &kp GRAVE &kp F1   &kp F2   &kp F3   &kp F4    &kp F5    &kp F6     &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12   &kp DEL
 &trans    &trans   &trans   &trans   &trans    &trans    &kp HOME   &kp PG_DN &kp PG_UP &kp END   &kp PSCRN &trans    &kp BSLH
 &kp CAPS  &trans   &trans   &trans   &trans    &trans    &kp LEFT   &kp DOWN  &kp UP    &kp RIGHT &trans    &trans    &trans
 &trans    &trans   &trans   &trans   &trans    &trans    &mkp LCLK  &mkp RCLK &mkp MCLK &trans    &trans    &trans    &kp PG_UP
-&trans    &trans   &trans   &trans   &kp DEL   &trans    &trans     &trans    &trans    &kp HOME  &kp PG_DN &kp END
+&trans    &trans   &trans   &trans   &kp DEL   &trans    &trans     &trans    &trans    &trans    &kp HOME  &kp PG_DN &kp END
 """
 SYSTEM = """
 &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans &trans &trans &trans &trans &trans &trans &bootloader
 &trans &out OUT_USB &out OUT_BLE &trans &trans &trans &trans &trans &trans &trans &trans &trans &sys_reset
 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 """
 
 
